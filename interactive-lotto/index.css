@@ -1,0 +1,228 @@
+:root {
+    --bg-dark: #0f172a;
+    --bg-darker: #020617;
+    --primary-glow: #8b5cf6;
+    --secondary-glow: #ec4899;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+}
+
+/* 테마별 색상 변수 오버라이드 */
+body.theme-bible {
+    --bg-dark: #272314;
+    --bg-darker: #131008;
+    --primary-glow: #fbbf24;
+    --secondary-glow: #d97706;
+}
+body.theme-buddha {
+    --bg-dark: #1f2924;
+    --bg-darker: #0f1712;
+    --primary-glow: #4ade80;
+    --secondary-glow: #059669;
+}
+body.theme-tarot {
+    --bg-dark: #1e1b4b;
+    --bg-darker: #0b092a;
+    --primary-glow: #c084fc;
+    --secondary-glow: #e879f9;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+    background-color: var(--bg-darker);
+    color: var(--text-main);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at 50% 50%, var(--bg-dark) 0%, var(--bg-darker) 100%);
+    transition: background 1s ease;
+}
+
+#app {
+    width: 100%;
+    max-width: 600px;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.stage {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease-in-out;
+}
+.stage.active {
+    opacity: 1; pointer-events: auto;
+}
+
+/* 타이틀 */
+.title {
+    font-size: 2.5rem; font-weight: 700;
+    margin-bottom: 0.5rem; text-align: center;
+    background: linear-gradient(to right, #fff, var(--primary-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.subtitle {
+    font-size: 1rem; color: var(--text-muted);
+    text-align: center; margin-bottom: 2rem; line-height: 1.5;
+}
+
+/* 0단계: 테마 선택 버튼 그리드 */
+.theme-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.theme-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: white;
+}
+.theme-btn:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-5px);
+    border-color: var(--primary-glow);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.theme-btn .icon { font-size: 2.5rem; margin-bottom: 10px; }
+.theme-btn .theme-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; }
+.theme-btn .theme-desc { font-size: 0.8rem; color: var(--text-muted); }
+
+/* 1단계: 동적 인터랙션 영역 */
+.interaction-area {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    perspective: 1000px;
+}
+
+/* 테마별 UI 요소들 (JS에서 클래스 추가로 주입) */
+/* 우주 구슬 (기본) */
+.orb-core {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, var(--primary-glow));
+    box-shadow: 0 0 30px var(--primary-glow);
+    cursor: pointer; transition: transform 0.1s;
+    touch-action: none; 
+}
+.orb-core:active, .orb-core.charging { transform: scale(0.95); box-shadow: 0 0 50px var(--secondary-glow); }
+
+/* 성경책 */
+.bible-book {
+    width: 140px; height: 180px;
+    background: linear-gradient(45deg, #451a03, #78350f);
+    border-radius: 5px 15px 15px 5px;
+    border-left: 10px solid #fcd34d;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer; transition: transform 0.2s;
+    position: relative;
+}
+.bible-book::after { content: '✝'; font-size: 4rem; color: rgba(252, 211, 77, 0.5); }
+.bible-book:active { transform: scale(0.95) rotateY(-10deg); }
+.bible-verse { position: absolute; top: -50px; width: 250px; text-align: center; color: #fcd34d; font-size: 0.9rem; opacity: 0; transition: opacity 0.5s; font-style: italic; }
+
+/* 목탁 */
+.moktak {
+    width: 120px; height: 100px;
+    background: radial-gradient(circle at top, #d97706, #78350f);
+    border-radius: 40% 40% 50% 50%;
+    position: relative;
+    cursor: pointer; transition: transform 0.1s;
+}
+.moktak::before {
+    content: ''; position: absolute; top: 30px; left: 20px; right: 20px; height: 10px;
+    background: rgba(0,0,0,0.4); border-radius: 10px;
+}
+.moktak:active { transform: scale(0.95) translateY(5px); }
+
+/* 타로 카드 */
+.tarot-card {
+    width: 120px; height: 180px;
+    background: linear-gradient(135deg, #4c1d95, #1e1b4b);
+    border: 2px solid #c084fc; border-radius: 10px;
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer; transition: transform 0.3s;
+    box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
+}
+.tarot-card::after { content: '🔮'; font-size: 3rem; }
+.tarot-card:active { transform: scale(0.95) rotateY(180deg); }
+
+/* 프로그레스 바 */
+.progress-wrapper { width: 80%; display: flex; flex-direction: column; align-items: center; }
+.progress-bar-container { width: 100%; height: 8px; background-color: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 1rem; }
+.progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow)); transition: width 0.1s ease-out; box-shadow: 0 0 10px var(--secondary-glow); }
+#energy-text { font-size: 1.5rem; font-weight: 700; }
+
+/* 2단계: 떠다니는 구슬들 */
+#orb-field { position: relative; width: 100%; flex-grow: 1; margin-bottom: 2rem; }
+.candidate-orb {
+    position: absolute; width: 50px; height: 50px; border-radius: 50%;
+    background: rgba(255,255,255,0.05); border: 1px solid var(--primary-glow);
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    display: flex; justify-content: center; align-items: center;
+    font-size: 1.2rem; font-weight: 700; color: transparent;
+    cursor: pointer; backdrop-filter: blur(4px);
+    transition: transform 0.3s, background 0.3s; user-select: none;
+}
+.candidate-orb:hover { background: rgba(255,255,255,0.1); transform: scale(1.1); }
+.candidate-orb.selected {
+    background: var(--primary-glow); color: #fff;
+    box-shadow: 0 0 20px var(--primary-glow); pointer-events: none;
+}
+
+/* 슬롯 */
+.selection-slots { display: flex; gap: 10px; margin-bottom: 2rem; }
+.slot {
+    width: 45px; height: 45px; border-radius: 50%;
+    border: 2px dashed rgba(255,255,255,0.2);
+    display: flex; justify-content: center; align-items: center;
+    font-size: 1.2rem; font-weight: 700; transition: all 0.3s;
+}
+.slot.filled { border-style: solid; border-color: var(--primary-glow); background: rgba(255,255,255,0.1); box-shadow: 0 0 10px var(--primary-glow); }
+
+/* 결과 */
+.result-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 2rem; margin-bottom: 3rem; }
+.result-orb {
+    width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+    font-size: 1.5rem; font-weight: 700; color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) backwards;
+}
+@keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+.action-buttons { display: flex; gap: 15px; margin-bottom: 2rem; }
+.btn { padding: 12px 24px; border-radius: 30px; border: none; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s, opacity 0.2s; }
+.btn:active { transform: scale(0.95); }
+.btn.primary { background: linear-gradient(90deg, var(--primary-glow), var(--secondary-glow)); color: white; }
+.btn.secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
+.btn:hover { opacity: 0.9; }
+
+.ad-placeholder { width: 320px; height: 100px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; color: rgba(255,255,255,0.3); font-size: 0.9rem; }
+.mt-auto { margin-top: auto; margin-bottom: 2rem; }
