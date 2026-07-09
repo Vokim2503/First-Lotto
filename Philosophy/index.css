@@ -131,6 +131,12 @@ header {
 .title:nth-child(3) { color: #FFD700; } /* 황금색 */
 .title:nth-child(4) { color: #00FFFF; } /* 하늘색(시안) */
 
+/* 자막 중 특정 조사 및 단어를 작게 표현 */
+.small-text {
+    font-size: 0.75em;
+    font-weight: 700;
+}
+
 @-webkit-keyframes float3DTitle {
     0% { -webkit-transform: translateX(-10px) rotate(-2deg); transform: translateX(-10px) rotate(-2deg); }
     100% { -webkit-transform: translateX(10px) rotate(2deg); transform: translateX(10px) rotate(2deg); }
