@@ -76,12 +76,21 @@ header {
     100% { transform: translateY(0px); }
 }
 
+.title-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 20px;
+    margin-bottom: 15px;
+}
+
 .title {
     font-size: 2.2rem;
     font-weight: 800;
     line-height: 1.3;
-    margin-bottom: 15px;
     color: #ffffff;
+    white-space: nowrap;
+    display: inline-block;
     /* 3D 텍스트 효과 (그라데이션 대신 겹겹이 그림자를 쌓음) */
     text-shadow: 
         0 1px 0 #134f31,
@@ -96,9 +105,9 @@ header {
         0 5px 10px rgba(0,0,0,0.25),
         0 10px 10px rgba(0,0,0,0.2),
         0 20px 20px rgba(0,0,0,0.15);
-    /* 좌우로 부드럽게 움직이는 애니메이션 추가 */
-    -webkit-animation: glide-title 4s ease-in-out infinite, float3DTitle 4s ease-in-out infinite alternate;
-    animation: glide-title 4s ease-in-out infinite, float3DTitle 4s ease-in-out infinite alternate;
+    /* 좌우로 부드럽게 움직이는 애니메이션 추가 (더 눈에 띄게) */
+    -webkit-animation: marquee-title-ltr 15s linear infinite;
+    animation: marquee-title-ltr 15s linear infinite;
 }
 
 @-webkit-keyframes float3DTitle {
@@ -361,13 +370,23 @@ select option {
 }
 
 @-webkit-keyframes glide-title {
-    0% { -webkit-transform: translateX(-15px); transform: translateX(-15px); }
-    50% { -webkit-transform: translateX(15px); transform: translateX(15px); }
-    100% { -webkit-transform: translateX(-15px); transform: translateX(-15px); }
+    0% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
+    50% { -webkit-transform: translateX(10vw); transform: translateX(10vw); }
+    100% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
 }
 
 @keyframes glide-title {
-    0% { -webkit-transform: translateX(-15px); transform: translateX(-15px); }
-    50% { -webkit-transform: translateX(15px); transform: translateX(15px); }
-    100% { -webkit-transform: translateX(-15px); transform: translateX(-15px); }
+    0% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
+    50% { -webkit-transform: translateX(10vw); transform: translateX(10vw); }
+    100% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
+}
+
+@-webkit-keyframes marquee-title-ltr {
+    0% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+    100% { -webkit-transform: translateX(100vw); transform: translateX(100vw); }
+}
+
+@keyframes marquee-title-ltr {
+    0% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+    100% { -webkit-transform: translateX(100vw); transform: translateX(100vw); }
 }
