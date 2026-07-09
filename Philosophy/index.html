@@ -16,6 +16,16 @@
     
     <!-- 우리가 예쁘게 꾸밀 CSS 디자인 파일을 연결합니다 -->
     <link rel="stylesheet" href="index.css">
+    <!-- 카페24 당당해 폰트 -->
+    <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.2/Cafe24Dangdanghae.woff" rel="preload" as="font" type="font/woff" crossorigin>
+    <style>
+        @font-face {
+            font-family: 'Cafe24Dangdanghae';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.2/Cafe24Dangdanghae.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
 </head>
 <body>
     <!-- 밤하늘이나 우주 같은 배경 효과를 줄 공간입니다 -->
@@ -26,7 +36,12 @@
         <header>
             <div class="logo-icon">🌿</div>
             <div class="title-container">
-                <h1 class="title">행복의 조건을 말하는 철학자들의 한마디</h1>
+                <div class="marquee-title-track">
+                    <h1 class="title">행복의 조건을 말하는 철학자들의 한마디</h1>
+                    <h1 class="title">행복의 조건을 말하는 철학자들의 한마디</h1>
+                    <h1 class="title">행복의 조건을 말하는 철학자들의 한마디</h1>
+                    <h1 class="title">행복의 조건을 말하는 철학자들의 한마디</h1>
+                </div>
             </div>
             <p class="intro-text">
                 마음이 어지럽고 갈 길이 막막하신가요?<br>
