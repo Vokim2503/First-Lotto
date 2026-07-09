@@ -1,304 +1,129 @@
-document.addEventListener('DOMContentLoaded', () => {
+// ====================================================
+// 행복칠TV 철학자 상담소 - 앱의 두뇌(로직) 담당 (app.js)
+// ====================================================
+
+// 1. 위대한 철학자들의 명언 데이터베이스 (마음껏 추가할 수 있습니다!)
+const quotesDB = {
+    // 진로/인생 고민에 대한 명언들
+    life: [
+        {
+            philosopher: "아르투어 쇼펜하우어",
+            quote: "우리는 다른 사람들과 같아지기 위해 삶의 4분의 3을 빼앗긴다.",
+            interpretation: "행복칠TV 해석: 남의 눈치를 보며 살기엔 당신의 인생이 너무 짧습니다. 당신만의 길을 가세요.",
+            youtubeLink: "https://www.youtube.com/@vokim" // 여기에 실제 쇼펜하우어 영상 링크를 넣으시면 됩니다!
+        },
+        {
+            philosopher: "레프 톨스토이",
+            quote: "모두가 세상을 변화시키려고 생각하지만, 정작 스스로 변하겠다고 생각하는 사람은 없다.",
+            interpretation: "행복칠TV 해석: 막막한 진로의 돌파구는 거창한 세상이 아니라, 오늘 나의 작은 변화에서 시작됩니다.",
+            youtubeLink: "https://www.youtube.com/@vokim" // 여기에 실제 톨스토이 영상 링크를 넣으시면 됩니다!
+        }
+    ],
+    // 인간관계 고민에 대한 명언들
+    human: [
+        {
+            philosopher: "아르투어 쇼펜하우어",
+            quote: "인간은 고슴도치와 같다. 너무 가까이하면 가시에 찔리고, 너무 멀어지면 추위를 느낀다.",
+            interpretation: "행복칠TV 해석: 상처받지 않으려면 사람들과 '적당한 거리'를 유지하는 지혜가 필요합니다.",
+            youtubeLink: "https://www.youtube.com/@vokim"
+        },
+        {
+            philosopher: "프리드리히 니체",
+            quote: "나를 죽이지 못하는 고통은 나를 더욱 강하게 만든다.",
+            interpretation: "행복칠TV 해석: 지금 그 사람 때문에 받는 상처가 결국 당신의 마음 근육을 단단하게 만들어 줄 것입니다.",
+            youtubeLink: "https://www.youtube.com/@vokim"
+        }
+    ],
+    // 마음/불안 고민에 대한 명언들
+    mind: [
+        {
+            philosopher: "마르쿠스 아우렐리우스",
+            quote: "우리의 인생은 우리의 생각이 만드는 것이다.",
+            interpretation: "행복칠TV 해석: 마음이 복잡할 때는 상황이 아니라, 상황을 바라보는 내 '생각'의 방향을 바꿔보세요.",
+            youtubeLink: "https://www.youtube.com/@vokim"
+        },
+        {
+            philosopher: "레프 톨스토이",
+            quote: "참된 행복은 자기 자신을 버리는 데서 찾을 수 있다.",
+            interpretation: "행복칠TV 해석: 내가 모든 것을 통제해야 한다는 강박과 욕심을 내려놓을 때 진정한 평온이 찾아옵니다.",
+            youtubeLink: "https://www.youtube.com/@vokim"
+        }
+    ],
+    // 사회/정치 현안 고민에 대한 명언들
+    politics: [
+        {
+            philosopher: "플라톤",
+            quote: "정치를 외면한 가장 큰 대가는 가장 저질스러운 인간들에게 지배당하는 것이다.",
+            interpretation: "행복칠TV 해석: 답답하더라도 우리가 사회와 정치에 계속 관심을 가지고 깨어 있어야 하는 이유입니다.",
+            youtubeLink: "https://www.youtube.com/@vokim"
+        },
+        {
+            philosopher: "장자크 루소",
+            quote: "인간은 자유롭게 태어났지만, 어디서나 쇠사슬에 매여 있다.",
+            interpretation: "행복칠TV 해석: 당연하게 여겨지는 사회의 부조리와 억압에 대해 늘 깨어 질문을 던져야 할 때입니다.",
+            youtubeLink: "https://www.youtube.com/@vokim"
+        }
+    ]
+};
+
+// 2. 화면에 있는 요소들(HTML)을 자바스크립트로 가져옵니다.
+const worrySelect = document.getElementById('worry-select');
+const spinBtn = document.getElementById('spin-btn');
+const loadingSpinner = document.getElementById('loading-spinner');
+const resultArea = document.getElementById('result-area');
+
+const philosopherNameEl = document.getElementById('philosopher-name');
+const quoteTextEl = document.getElementById('quote-text');
+const quoteInterpretationEl = document.getElementById('quote-interpretation');
+const youtubeLinkEl = document.getElementById('youtube-link'); // 유튜브 버튼 가져오기
+
+// 3. 사용자가 '고민'을 선택했을 때 버튼을 활성화하는 마법
+worrySelect.addEventListener('change', function() {
+    // 만약 '-- 고민을 선택해주세요 --' 가 아닌 다른 진짜 고민을 골랐다면?
+    if (this.value !== 'none') {
+        spinBtn.disabled = false; // 버튼의 잠금을 풉니다!
+        spinBtn.innerText = "철학자의 조언 구하기 🔮"; // 글씨도 바꿉니다.
+    } else {
+        spinBtn.disabled = true; // 다시 잠급니다.
+        spinBtn.innerText = "철학자의 조언 구하기";
+    }
+});
+
+// 4. '조언 구하기' 버튼을 눌렀을 때 실행되는 룰렛 마법!
+spinBtn.addEventListener('click', function() {
+    const selectedWorry = worrySelect.value;
     
-    let currentTheme = 'universe'; // 기본 테마
-    let userSeedData = []; // 시드 생성을 위한 데이터
-    let energy = 0;
+    // 1) 결과창을 다시 숨기고 스피너(로딩 애니메이션)를 보여줍니다.
+    resultArea.classList.add('hidden');
+    loadingSpinner.classList.remove('hidden');
+    spinBtn.disabled = true; // 돌아가는 동안 버튼을 또 못 누르게 막습니다.
     
-    // 성경/불경 더미 데이터
-    const bibleVerses = [
-        "여호와는 나의 목자시니 내게 부족함이 없으리로다 (시편 23:1)",
-        "내게 능력 주시는 자 안에서 내가 모든 것을 할 수 있느니라 (빌립보서 4:13)",
-        "두려워하지 말라 내가 너와 함께 함이라 (이사야 41:10)",
-        "구하라 그러면 너희에게 주실 것이요 (마태복음 7:7)"
-    ];
-    const buddhaVerses = [
-        "마음이 모든 것을 만든다. (법구경)",
-        "지나간 과거에 매달리지 말고 미래를 원하지도 말라. (아함경)",
-        "스스로를 등불로 삼고 의지하라. (열반경)",
-        "물방울이 모여 바다를 이룬다. (잡아함경)"
-    ];
-
-    // --- 0단계: 테마 선택 ---
-    const themeBtns = document.querySelectorAll('.theme-btn');
-    themeBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const theme = e.currentTarget.dataset.theme;
-            selectTheme(theme);
-        });
-    });
-
-    function selectTheme(theme) {
-        currentTheme = theme;
-        // 1. 테마 CSS 클래스 적용
-        document.body.className = `theme-${theme}`;
+    // 2) 2초(2000밀리초) 동안 신비롭게 고민하는 척을 합니다.
+    setTimeout(() => {
+        // 해당 고민(life, human, mind)에 맞는 명언 리스트를 가져옵니다.
+        const possibleQuotes = quotesDB[selectedWorry];
         
-        // 2. 구글 애널리틱스 등 데이터 수집을 위한 가상 로깅 (여기서 사용자 성향 데이터를 수집합니다)
-        console.log(`[분석용 데이터] 사용자가 '${theme}' 테마를 선택했습니다.`);
-        // 실제 운영 시: gtag('event', 'select_theme', { 'theme_name': theme });
-
-        // 3. 1단계 화면 셋업
-        setupStage1();
+        // 리스트 중에서 무작위로(랜덤) 하나를 뽑습니다.
+        const randomIndex = Math.floor(Math.random() * possibleQuotes.length);
+        const chosenQuote = possibleQuotes[randomIndex];
         
-        // 4. 스테이지 전환
-        goToStage(1);
-    }
-
-    // --- 1단계: 테마별 난수 생성 UI 셋업 ---
-    let interactionElement = null;
-    let chargeInterval = null;
-
-    function setupStage1() {
-        energy = 0;
-        userSeedData = [];
-        updateProgress();
+        // 3) 뽑힌 명언을 화면(HTML)에 쏙쏙 집어넣습니다.
+        philosopherNameEl.innerText = chosenQuote.philosopher;
+        quoteTextEl.innerText = `"${chosenQuote.quote}"`;
+        quoteInterpretationEl.innerText = chosenQuote.interpretation;
         
-        const interactionArea = document.getElementById('interaction-area');
-        interactionArea.innerHTML = ''; // 초기화
+        // ★ 초자동화 마법: 1100개의 영상 중 찾을 필요 없이, 유튜브 '자동 검색' 링크를 생성합니다!
+        // 예: https://www.youtube.com/results?search_query=행복칠TV+쇼펜하우어
+        const searchKeyword = "행복칠TV " + chosenQuote.philosopher;
+        const autoSearchUrl = "https://www.youtube.com/results?search_query=" + encodeURIComponent(searchKeyword);
         
-        const title = document.getElementById('stage1-title');
-        const subtitle = document.getElementById('stage1-subtitle');
-
-        if (currentTheme === 'bible') {
-            title.textContent = '말씀의 힘';
-            subtitle.textContent = '성경책을 터치하여 말씀을 읽고 에너지를 채우세요.';
-            
-            interactionElement = document.createElement('div');
-            interactionElement.className = 'bible-book';
-            
-            const verseText = document.createElement('div');
-            verseText.className = 'bible-verse';
-            interactionArea.appendChild(verseText);
-            interactionArea.appendChild(interactionElement);
-            
-            interactionElement.addEventListener('click', () => {
-                const randomVerse = bibleVerses[Math.floor(Math.random() * bibleVerses.length)];
-                verseText.textContent = randomVerse;
-                verseText.style.opacity = 1;
-                
-                // 구절의 문자열 길이나 코드를 바탕으로 시드 누적
-                userSeedData.push(randomVerse.length * Math.random());
-                addEnergy(25); // 4번 누르면 100%
-            });
-            
-        } else if (currentTheme === 'buddha') {
-            title.textContent = '마음의 평화';
-            subtitle.textContent = '목탁을 두드려 번뇌를 씻고 기운을 채우세요.';
-            
-            interactionElement = document.createElement('div');
-            interactionElement.className = 'moktak';
-            interactionArea.appendChild(interactionElement);
-            
-            interactionElement.addEventListener('click', () => {
-                // 클릭할 때마다 시드 누적
-                userSeedData.push(Date.now());
-                addEnergy(10); // 10번 두드리면 100%
-            });
-
-        } else if (currentTheme === 'tarot') {
-            title.textContent = '운명의 카드';
-            subtitle.textContent = '카드를 터치하여 운명의 에너지를 이끌어내세요.';
-            
-            interactionElement = document.createElement('div');
-            interactionElement.className = 'tarot-card';
-            interactionArea.appendChild(interactionElement);
-            
-            interactionElement.addEventListener('click', () => {
-                userSeedData.push(Math.random() * 1000);
-                addEnergy(35); // 3번 클릭
-            });
-            
-        } else {
-            // universe (기존 구슬 방식)
-            title.textContent = '우주의 에너지';
-            subtitle.textContent = '구슬을 문지르거나 꾹 눌러 에너지를 채워주세요.';
-            
-            interactionElement = document.createElement('div');
-            interactionElement.className = 'orb-core';
-            interactionArea.appendChild(interactionElement);
-            
-            // 기존 마우스/터치 홀드 로직
-            const startCharge = (e) => {
-                interactionElement.classList.add('charging');
-                userSeedData.push(e.clientX || (e.touches && e.touches[0].clientX) || 0);
-                chargeInterval = setInterval(() => addEnergy(2), 30);
-            };
-            const stopCharge = () => {
-                interactionElement.classList.remove('charging');
-                clearInterval(chargeInterval);
-            };
-            
-            interactionElement.addEventListener('mousedown', startCharge);
-            document.addEventListener('mouseup', stopCharge);
-            interactionElement.addEventListener('touchstart', startCharge, {passive: false});
-            document.addEventListener('touchend', stopCharge);
-        }
-    }
-
-    function addEnergy(amount) {
-        if (energy >= 100) return;
-        energy += amount;
-        if (energy >= 100) {
-            energy = 100;
-            finishCharging();
-        }
-        updateProgress();
-    }
-
-    function updateProgress() {
-        document.getElementById('seed-progress').style.width = `${energy}%`;
-        document.getElementById('energy-text').textContent = `${Math.floor(energy)}%`;
-    }
-
-    function finishCharging() {
-        if(chargeInterval) clearInterval(chargeInterval);
+        youtubeLinkEl.href = autoSearchUrl;
+        youtubeLinkEl.innerText = `📺 행복칠TV의 '${chosenQuote.philosopher}' 영상 찾아보기`;
         
-        // 1. 사용자 데이터를 기반으로 최종 난수 시드 생성
-        const seedSum = userSeedData.reduce((a, b) => a + b, 1);
+        // 4) 로딩을 끝내고 결과창을 화려하게 보여줍니다!
+        loadingSpinner.classList.add('hidden');
+        resultArea.classList.remove('hidden');
+        spinBtn.disabled = false; // 다시 누를 수 있게 버튼 잠금 해제
         
-        // 2. 다음 단계로
-        setTimeout(() => {
-            goToStage(2, seedSum);
-        }, 800);
-    }
-
-    // --- 스테이지 전환 관리 ---
-    function goToStage(stageNum, seed) {
-        document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
-        document.getElementById(`stage-${stageNum}`).classList.add('active');
-        
-        if (stageNum === 2) initStage2(seed);
-        else if (stageNum === 3) initStage3();
-    }
-
-    // --- 2단계: 후보군 떠다니기 로직 ---
-    const orbField = document.getElementById('orb-field');
-    let selectedNumbers = [];
-    let physicsInterval;
-    let orbs = [];
-
-    function customRandom(seed) {
-        let x = Math.sin(seed++) * 10000;
-        return x - Math.floor(x);
-    }
-
-    function initStage2(seed) {
-        orbField.innerHTML = '';
-        selectedNumbers = [];
-        document.querySelectorAll('.slot').forEach(s => {
-            s.classList.remove('filled'); s.textContent = '';
-        });
-        orbs = [];
-
-        let allNumbers = Array.from({length: 45}, (_, i) => i + 1);
-        let currentSeed = seed;
-        for (let i = allNumbers.length - 1; i > 0; i--) {
-            const j = Math.floor(customRandom(currentSeed++) * (i + 1));
-            [allNumbers[i], allNumbers[j]] = [allNumbers[j], allNumbers[i]];
-        }
-        const candidateNumbers = allNumbers.slice(0, 15);
-
-        const fieldRect = orbField.getBoundingClientRect();
-        
-        candidateNumbers.forEach((num) => {
-            const orb = document.createElement('div');
-            orb.classList.add('candidate-orb');
-            orb.textContent = num; 
-            
-            const x = Math.random() * (fieldRect.width - 50);
-            const y = Math.random() * (fieldRect.height - 50);
-            const vx = (Math.random() - 0.5) * 2.5;
-            const vy = (Math.random() - 0.5) * 2.5;
-
-            orb.style.left = `${x}px`;
-            orb.style.top = `${y}px`;
-            orbField.appendChild(orb);
-            
-            const orbData = { el: orb, num: num, x: x, y: y, vx: vx, vy: vy };
-            orbs.push(orbData);
-
-            orb.addEventListener('click', () => handleOrbClick(orbData));
-        });
-
-        startPhysics();
-    }
-
-    function startPhysics() {
-        if (physicsInterval) clearInterval(physicsInterval);
-        const fieldRect = orbField.getBoundingClientRect();
-
-        physicsInterval = setInterval(() => {
-            orbs.forEach(orb => {
-                if (orb.el.classList.contains('selected')) return;
-                orb.x += orb.vx; orb.y += orb.vy;
-                if (orb.x <= 0 || orb.x >= fieldRect.width - 50) orb.vx *= -1;
-                if (orb.y <= 0 || orb.y >= fieldRect.height - 50) orb.vy *= -1;
-                orb.el.style.transform = `translate(${orb.x}px, ${orb.y}px)`;
-            });
-        }, 16);
-    }
-
-    function handleOrbClick(orbData) {
-        if (selectedNumbers.length >= 6) return;
-        if (orbData.el.classList.contains('selected')) return;
-
-        orbData.el.classList.add('selected');
-        const slot = document.querySelector(`.slot[data-index="${selectedNumbers.length}"]`);
-        slot.textContent = orbData.num;
-        slot.classList.add('filled');
-        selectedNumbers.push(orbData.num);
-
-        if (selectedNumbers.length === 6) {
-            clearInterval(physicsInterval);
-            setTimeout(() => goToStage(3), 1000);
-        }
-    }
-
-    // --- 3단계: 결과 로직 ---
-    function initStage3() {
-        const resultContainer = document.getElementById('result-numbers');
-        resultContainer.innerHTML = '';
-        
-        const sortedNumbers = [...selectedNumbers].sort((a, b) => a - b);
-        
-        // 종교/테마별로 마무리 멘트를 다르게 줄 수 있습니다.
-        const resultMsg = document.getElementById('result-message');
-        if(currentTheme === 'bible') resultMsg.textContent = "기도와 함께하는 행운의 번호입니다.";
-        else if(currentTheme === 'buddha') resultMsg.textContent = "마음을 비운 자에게 찾아온 행운의 번호입니다.";
-        else if(currentTheme === 'tarot') resultMsg.textContent = "운명의 카드가 계시한 당신의 번호입니다.";
-        else resultMsg.textContent = "우주의 기운이 담긴 당신의 로또 번호입니다.";
-
-        sortedNumbers.forEach((num, index) => {
-            const orb = document.createElement('div');
-            orb.classList.add('result-orb');
-            orb.textContent = num;
-            
-            // 기존 동행복권 색상
-            if(num <= 10) orb.style.background = 'linear-gradient(135deg, #facc15, #eab308)';
-            else if(num <= 20) orb.style.background = 'linear-gradient(135deg, #60a5fa, #3b82f6)';
-            else if(num <= 30) orb.style.background = 'linear-gradient(135deg, #f87171, #ef4444)';
-            else if(num <= 40) orb.style.background = 'linear-gradient(135deg, #9ca3af, #6b7280)';
-            else orb.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
-            
-            orb.style.animationDelay = `${index * 0.1}s`;
-            resultContainer.appendChild(orb);
-        });
-    }
-
-    document.getElementById('btn-retry').addEventListener('click', () => {
-        // 완전 초기화 후 0단계(테마선택)로
-        document.body.className = 'theme-default';
-        goToStage(0);
-    });
-
-    document.getElementById('btn-copy').addEventListener('click', () => {
-        const sortedNumbers = [...selectedNumbers].sort((a, b) => a - b);
-        const text = `나의 [${currentTheme}] 성향 로또 번호: ${sortedNumbers.join(', ')}`;
-        
-        navigator.clipboard.writeText(text).then(() => {
-            const btn = document.getElementById('btn-copy');
-            const originalText = btn.textContent;
-            btn.textContent = '복사 완료!';
-            setTimeout(() => { btn.textContent = originalText; }, 2000);
-        });
-    });
+    }, 2000); // 2초 뒤에 이 안의 코드가 실행됨
 });
