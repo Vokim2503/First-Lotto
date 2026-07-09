@@ -100,11 +100,11 @@ header {
 
 .marquee-title-track {
     display: flex;
-    gap: 150px; /* 텍스트 사이의 간격 */
+    gap: 80vw; /* 마지막 단어가 사라질 즈음 첫 단어가 나타나도록 간격을 화면 너비 근처로 설정 */
     width: max-content;
-    /* 자막은 우에서 좌로 흐르도록 변경 */
-    -webkit-animation: marquee-title-rtl 15s linear infinite;
-    animation: marquee-title-rtl 15s linear infinite;
+    /* 자막 흐름 속도를 더 느리게(25초) 변경 */
+    -webkit-animation: marquee-title-rtl 25s linear infinite;
+    animation: marquee-title-rtl 25s linear infinite;
     transform-style: preserve-3d;
 }
 
@@ -132,34 +132,16 @@ header {
         0 20px 20px rgba(0,0,0,0.15);
 }
 
-/* 각각의 자막에 예쁜 무지개 색상 부여 (단어별 타이핑 효과) */
+/* 각각의 자막에 예쁜 무지개 색상 고정 부여 (타이핑 하듯 색이 변한 상태로 지나감) */
 .word {
     display: inline-block;
-    -webkit-animation: type-color 25s infinite;
-    animation: type-color 25s infinite;
     margin-right: 15px; /* 단어 사이 띄어쓰기 여백 */
 }
-.w1 { -webkit-animation-delay: 0s; animation-delay: 0s; }
-.w2 { -webkit-animation-delay: 1.5s; animation-delay: 1.5s; }
-.w3 { -webkit-animation-delay: 3.0s; animation-delay: 3.0s; }
-.w4 { -webkit-animation-delay: 4.5s; animation-delay: 4.5s; }
-.w5 { -webkit-animation-delay: 6.0s; animation-delay: 6.0s; margin-right: 0; }
-
-@-webkit-keyframes type-color {
-    0%, 100% { color: #ffffff; }
-    20% { color: #4CAF50; } /* 녹색 */
-    40% { color: #FF69B4; } /* 분홍색 */
-    60% { color: #FFD700; } /* 황금색 */
-    80% { color: #00FFFF; } /* 시안 */
-}
-
-@keyframes type-color {
-    0%, 100% { color: #ffffff; }
-    20% { color: #4CAF50; }
-    40% { color: #FF69B4; }
-    60% { color: #FFD700; }
-    80% { color: #00FFFF; }
-}
+.w1 { color: #4CAF50; } /* 녹색 */
+.w2 { color: #FF69B4; } /* 분홍색 */
+.w3 { color: #FFD700; } /* 황금색 */
+.w4 { color: #00FFFF; } /* 시안 */
+.w5 { color: #FF9800; margin-right: 0; } /* 주황색 */
 
 /* 자막 중 특정 조사 및 단어를 작게 표현 */
 .small-text {
