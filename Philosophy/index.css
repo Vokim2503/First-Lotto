@@ -101,9 +101,9 @@ header {
 .marquee-title-track {
     display: flex;
     width: max-content;
-    /* 자막 흐름 속도(30초). 오른쪽 밖에서 시작해 왼쪽 밖으로 사라진 후 빈 공간 대기 */
-    -webkit-animation: marquee-title-rtl 30s linear infinite;
-    animation: marquee-title-rtl 30s linear infinite;
+    /* 자막 흐름 속도(40초). 오른쪽 밖에서 시작해 왼쪽 밖으로 사라진 후 빈 공간 대기 */
+    -webkit-animation: marquee-title-rtl 40s linear infinite;
+    animation: marquee-title-rtl 40s linear infinite;
     transform-style: preserve-3d;
 }
 
@@ -130,29 +130,16 @@ header {
         0 20px 20px rgba(0,0,0,0.15);
 }
 
-/* 단어별 타이핑 효과 (화면 가운데로 진입할 때 흰색에서 각자의 색상으로 한 번만 변함) */
+/* 단어별 고정 색상 부여 (애니메이션 없이 영구 고정) */
 .word {
     display: inline-block;
     margin-right: 15px; /* 단어 사이 띄어쓰기 여백 */
-    color: #ffffff; /* 기본색 백색 */
 }
-.w1 { animation: color-w1 30s infinite; -webkit-animation: color-w1 30s infinite; }
-.w2 { animation: color-w2 30s infinite; -webkit-animation: color-w2 30s infinite; }
-.w3 { animation: color-w3 30s infinite; -webkit-animation: color-w3 30s infinite; }
-.w4 { animation: color-w4 30s infinite; -webkit-animation: color-w4 30s infinite; }
-.w5 { animation: color-w5 30s infinite; -webkit-animation: color-w5 30s infinite; margin-right: 0; }
-
-@-webkit-keyframes color-w1 { 0%, 10% { color: #ffffff; } 10.1%, 100% { color: #4CAF50; } }
-@-webkit-keyframes color-w2 { 0%, 15% { color: #ffffff; } 15.1%, 100% { color: #FF69B4; } }
-@-webkit-keyframes color-w3 { 0%, 20% { color: #ffffff; } 20.1%, 100% { color: #FFD700; } }
-@-webkit-keyframes color-w4 { 0%, 25% { color: #ffffff; } 25.1%, 100% { color: #00FFFF; } }
-@-webkit-keyframes color-w5 { 0%, 30% { color: #ffffff; } 30.1%, 100% { color: #FF9800; } }
-
-@keyframes color-w1 { 0%, 10% { color: #ffffff; } 10.1%, 100% { color: #4CAF50; } }
-@keyframes color-w2 { 0%, 15% { color: #ffffff; } 15.1%, 100% { color: #FF69B4; } }
-@keyframes color-w3 { 0%, 20% { color: #ffffff; } 20.1%, 100% { color: #FFD700; } }
-@keyframes color-w4 { 0%, 25% { color: #ffffff; } 25.1%, 100% { color: #00FFFF; } }
-@keyframes color-w5 { 0%, 30% { color: #ffffff; } 30.1%, 100% { color: #FF9800; } }
+.w1 { color: #4CAF50; } /* 녹색 */
+.w2 { color: #FF69B4; } /* 분홍색 */
+.w3 { color: #FFD700; } /* 황금색 */
+.w4 { color: #00FFFF; } /* 시안 */
+.w5 { color: #FF9800; margin-right: 0; } /* 주황색 */
 
 /* 자막 중 특정 조사 및 단어를 작게 표현 */
 .small-text {
@@ -424,13 +411,13 @@ select option {
 @-webkit-keyframes marquee-title-rtl {
     /* 오른쪽 화면 밖에서 출발해서 왼쪽 화면 밖으로 완전히 나간 후 대기 (충분한 간격) */
     0% { -webkit-transform: translateX(120vw) rotateX(25deg); transform: translateX(120vw) rotateX(25deg); }
-    80% { -webkit-transform: translateX(-150vw) rotateX(25deg); transform: translateX(-150vw) rotateX(25deg); }
+    70% { -webkit-transform: translateX(-150vw) rotateX(25deg); transform: translateX(-150vw) rotateX(25deg); }
     100% { -webkit-transform: translateX(-150vw) rotateX(25deg); transform: translateX(-150vw) rotateX(25deg); }
 }
 
 @keyframes marquee-title-rtl {
     0% { transform: translateX(120vw) rotateX(25deg); }
-    80% { transform: translateX(-150vw) rotateX(25deg); }
+    70% { transform: translateX(-150vw) rotateX(25deg); }
     100% { transform: translateX(-150vw) rotateX(25deg); }
 }
 
