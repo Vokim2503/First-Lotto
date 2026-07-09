@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- 검색 엔진(구글, 네이버)에 우리 앱이 잘 노출되도록 하는 SEO(검색 엔진 최적화) 설정입니다 -->
-    <title>행복칠 철학자 상담소 | 나의 고민 해결 룰렛</title>
-    <meta name="description" content="명상과 철학의 채널 행복칠TV에서 제공하는 철학자 고민 상담소입니다. 쇼펜하우어와 톨스토이의 명언으로 오늘 하루의 해답을 찾아보세요.">
+    <title>행복칠TV | 시대의 철학 천재들</title>
+    <meta name="description" content="명상과 철학의 채널 행복칠TV에서 제공하는 '시대의 철학 천재들'입니다. 쇼펜하우어, 톨스토이 등 천재들의 생각과 명언으로 오늘 하루의 해답을 찾아보세요.">
     
     <!-- Google Fonts에서 우아하고 현대적인 느낌의 폰트(Pretendard/Noto Serif)를 가져옵니다 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&display=swap" rel="stylesheet">
     
-    <!-- 우리가 예쁘게 꾸밀 CSS 디자인 파일을 연결합니다 -->
+    <!-- 우리가 예쁘게 꾸밀 CSS 디자인 파일을 연결합니다 (캐시 방지용 버전 추가) -->
     <link rel="stylesheet" href="index.css">
     <!-- 카페24 당당해 폰트 -->
     <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.2/Cafe24Dangdanghae.woff" rel="preload" as="font" type="font/woff" crossorigin>
@@ -25,6 +25,73 @@
             font-weight: normal;
             font-style: normal;
         }
+
+        /* 브라우저 캐싱을 완벽히 무시하기 위해 팝업 디자인을 HTML에 직접 심어둡니다 */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal-overlay.hidden {
+            display: none !important;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #1e1e30, #2a2a40);
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            color: white;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 30px;
+            color: #ff2a85;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        #modal-name {
+            font-family: 'Cafe24Dangdanghae', sans-serif;
+            color: #a4f522;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        #modal-quote {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #f1f5f9;
+        }
+
+        #modal-advice {
+            font-size: 0.95rem;
+            color: #e8cbc0;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -34,84 +101,111 @@
     <!-- 화면 중앙에 들어갈 메인 상자(Glassmorphism 유리 효과)입니다 -->
     <main class="container">
         <header>
-            <div class="logo-icon">🌿</div>
-            <div class="title-container">
-                <div class="marquee-title-track">
-                    <h1 class="title">행복의 조건을 말하는 철학자들의 한마디</h1>
-                    <h1 class="title">행복의 조건을 말하는 철학자들의 한마디</h1>
-                    <h1 class="title">행복의 조건을 말하는 철학자들의 한마디</h1>
-                    <h1 class="title">행복의 조건을 말하는 철학자들의 한마디</h1>
+            <div class="circular-logo-container">
+                <div class="logo-center">
+                    <img src="logo.png" alt="행복칠 로고">
+                </div>
+                <div class="scene">
+                    <div class="carousel">
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(6.75deg) translateZ(220px);"><span class="text-gold">세</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(20.25deg) translateZ(220px);"><span class="text-gold">기</span></div>
+                        <div class="carousel__cell cell-particle" style="transform: rotateY(29.25deg) translateZ(220px);"><span class="particle text-silver">를</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(38.25deg) translateZ(220px);"><span class="text-silver">뛰</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(51.75deg) translateZ(220px);"><span class="text-silver">어</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(65.25deg) translateZ(220px);"><span class="text-silver">넘</span></div>
+                        <div class="carousel__cell cell-particle" style="transform: rotateY(74.25deg) translateZ(220px);"><span class="particle text-silver">은</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(83.25deg) translateZ(220px);"><span class="text-silver">천</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(96.75deg) translateZ(220px);"><span class="text-silver">재</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(110.25deg) translateZ(220px);"><span class="text-green">철</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(123.75deg) translateZ(220px);"><span class="text-green">학</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(137.25deg) translateZ(220px);"><span class="text-green">자</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(150.75deg) translateZ(220px);"><span class="text-silver">들</span></div>
+                        <div class="carousel__cell cell-particle" style="transform: rotateY(159.75deg) translateZ(220px);"><span class="particle text-silver">의</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(168.75deg) translateZ(220px);"><span class="text-green">비</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(182.25deg) translateZ(220px);"><span class="text-green">밀</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(195.75deg) translateZ(220px);"><span class="text-green">서</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(209.25deg) translateZ(220px);"><span class="text-green">재</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(222.75deg) translateZ(220px);"><span class="text-silver">•</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(236.25deg) translateZ(220px);"><span class="text-silver">김</span></div>
+                        <div class="carousel__cell cell-particle" style="transform: rotateY(245.25deg) translateZ(220px);"><span class="particle text-silver">의</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(254.25deg) translateZ(220px);"><span class="text-silver">소</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(267.75deg) translateZ(220px);"><span class="text-silver">리</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(281.25deg) translateZ(220px);"><span class="text-silver">•</span></div>
+                        <div class="carousel__cell cell-english" style="transform: rotateY(292.50deg) translateZ(220px);"><span class="text-gold">V</span></div>
+                        <div class="carousel__cell cell-english" style="transform: rotateY(301.50deg) translateZ(220px);"><span class="text-gold">o</span></div>
+                        <div class="carousel__cell cell-english" style="transform: rotateY(310.50deg) translateZ(220px);"><span class="text-gold">K</span></div>
+                        <div class="carousel__cell cell-particle" style="transform: rotateY(317.25deg) translateZ(220px);"><span class="particle text-gold">i</span></div>
+                        <div class="carousel__cell cell-english" style="transform: rotateY(324.00deg) translateZ(220px);"><span class="text-gold">m</span></div>
+                        <div class="carousel__cell cell-english" style="transform: rotateY(333.00deg) translateZ(220px);"><span class="text-gold">T</span></div>
+                        <div class="carousel__cell cell-english" style="transform: rotateY(342.00deg) translateZ(220px);"><span class="text-gold">V</span></div>
+                        <div class="carousel__cell cell-normal" style="transform: rotateY(353.25deg) translateZ(220px);"><span class="text-silver">•</span></div>
+                    </div>
                 </div>
             </div>
-            <p class="intro-text">
-                마음이 어지럽고 갈 길이 막막하신가요?<br>
-                수백 년 전 지혜의 거장들이 당신을 위해 준비한<br>
-                단 하나의 해답을 뽑아보세요.
-            </p>
         </header>
 
         <!-- 철학자 갤러리 (메인 상자 내부 자동 스크롤) -->
         <div class="philosopher-gallery">
             <div class="gallery-track">
                 <!-- 1세트 -->
-                <a href="https://www.youtube.com/results?search_query=행복칠TV+쇼펜하우어" target="_blank" class="gallery-card">
+                <a href="#" class="gallery-card" data-philosopher="쇼펜하우어">
                     <img src="images/schopenhauer.jpg" alt="쇼펜하우어">
                     <span class="name-ko">쇼펜하우어</span>
                     <span class="name-en">Schopenhauer</span>
                 </a>
-                <a href="https://www.youtube.com/results?search_query=행복칠TV+톨스토이" target="_blank" class="gallery-card">
+                <a href="#" class="gallery-card" data-philosopher="톨스토이">
                     <img src="images/tolstoy.jpg" alt="톨스토이">
                     <span class="name-ko">톨스토이</span>
                     <span class="name-en">Tolstoy</span>
                 </a>
-                <a href="https://www.youtube.com/results?search_query=행복칠TV+니체" target="_blank" class="gallery-card">
+                <a href="#" class="gallery-card" data-philosopher="니체">
                     <img src="images/nietzsche.jpg" alt="니체">
                     <span class="name-ko">니체</span>
                     <span class="name-en">Nietzsche</span>
                 </a>
-                <a href="https://www.youtube.com/results?search_query=행복칠TV+아우렐리우스" target="_blank" class="gallery-card">
+                <a href="#" class="gallery-card" data-philosopher="아우렐리우스">
                     <img src="images/aurelius.jpg" alt="아우렐리우스">
                     <span class="name-ko">아우렐리우스</span>
                     <span class="name-en">Marcus Aurelius</span>
                 </a>
-                <a href="https://www.youtube.com/results?search_query=행복칠TV+플라톤" target="_blank" class="gallery-card">
+                <a href="#" class="gallery-card" data-philosopher="플라톤">
                     <img src="images/plato.jpg" alt="플라톤">
                     <span class="name-ko">플라톤</span>
                     <span class="name-en">Plato</span>
                 </a>
-                <a href="https://www.youtube.com/results?search_query=행복칠TV+루소" target="_blank" class="gallery-card">
+                <a href="#" class="gallery-card" data-philosopher="루소">
                     <img src="images/rousseau.jpg" alt="루소">
                     <span class="name-ko">루소</span>
                     <span class="name-en">Rousseau</span>
                 </a>
 
                 <!-- 2세트 (자연스러운 무한 스크롤 연결을 위해 복제) -->
-                <a href="https://www.youtube.com/results?search_query=행복칠TV+쇼펜하우어" target="_blank" class="gallery-card">
+                <a href="#" class="gallery-card" data-philosopher="쇼펜하우어">
                     <img src="images/schopenhauer.jpg" alt="쇼펜하우어">
                     <span class="name-ko">쇼펜하우어</span>
                     <span class="name-en">Schopenhauer</span>
                 </a>
-                <a href="https://www.youtube.com/results?search_query=행복칠TV+톨스토이" target="_blank" class="gallery-card">
+                <a href="#" class="gallery-card" data-philosopher="톨스토이">
                     <img src="images/tolstoy.jpg" alt="톨스토이">
                     <span class="name-ko">톨스토이</span>
                     <span class="name-en">Tolstoy</span>
                 </a>
-                <a href="https://www.youtube.com/results?search_query=행복칠TV+니체" target="_blank" class="gallery-card">
+                <a href="#" class="gallery-card" data-philosopher="니체">
                     <img src="images/nietzsche.jpg" alt="니체">
                     <span class="name-ko">니체</span>
                     <span class="name-en">Nietzsche</span>
                 </a>
-                <a href="https://www.youtube.com/results?search_query=행복칠TV+아우렐리우스" target="_blank" class="gallery-card">
+                <a href="#" class="gallery-card" data-philosopher="아우렐리우스">
                     <img src="images/aurelius.jpg" alt="아우렐리우스">
                     <span class="name-ko">아우렐리우스</span>
                     <span class="name-en">Marcus Aurelius</span>
                 </a>
-                <a href="https://www.youtube.com/results?search_query=행복칠TV+플라톤" target="_blank" class="gallery-card">
+                <a href="#" class="gallery-card" data-philosopher="플라톤">
                     <img src="images/plato.jpg" alt="플라톤">
                     <span class="name-ko">플라톤</span>
                     <span class="name-en">Plato</span>
                 </a>
-                <a href="https://www.youtube.com/results?search_query=행복칠TV+루소" target="_blank" class="gallery-card">
+                <a href="#" class="gallery-card" data-philosopher="루소">
                     <img src="images/rousseau.jpg" alt="루소">
                     <span class="name-ko">루소</span>
                     <span class="name-en">Rousseau</span>
@@ -125,17 +219,23 @@
         <section class="selection-area">
             <label for="worry-select">지금 마음을 짓누르는 가장 무거운 고민은 무엇인가요?</label>
             <select id="worry-select">
-                <option value="none">-- 고민을 선택해주세요 --</option>
-                <option value="life">막막한 인생과 진로</option>
-                <option value="human">상처받은 인간관계</option>
-                <option value="mind">불안하고 복잡한 마음</option>
-                <option value="politics">답답한 사회와 정치 현안</option>
+                <option value="none">-- 당신의 고민을 선택해주세요 --</option>
+                <option value="money">💸 팍팍한 현실과 돈 걱정</option>
+                <option value="human">💔 믿었던 사람에게 받은 상처</option>
+                <option value="compare">👀 자꾸만 남들과 비교되는 내 처지</option>
+                <option value="burnout">🔋 아무것도 하기 싫은 무기력과 번아웃</option>
+                <option value="life">🧭 늦은 건 아닐까 막막한 진로와 미래</option>
+                <option value="aging">🕰️ 나이 듦과 건강에 대한 두려움</option>
+                <option value="family">👨‍👩‍👧‍👦 가깝고도 먼 가족과의 갈등</option>
+                <option value="work">🏢 직장 상사나 동료와의 스트레스</option>
+                <option value="mind">🌪️ 이유 없이 찾아오는 우울과 불안</option>
+                <option value="politics">😤 답답한 사회와 쏟아지는 자극들</option>
             </select>
         </section>
 
         <!-- 룰렛 버튼과 빙글빙글 돌아가는 효과가 나타날 영역입니다 -->
         <section class="roulette-area">
-            <button id="spin-btn" class="glow-on-hover" disabled>철학자의 조언 구하기</button>
+            <button id="spin-btn" class="glow-on-hover">철학자의 조언 구하기</button>
             <div id="loading-spinner" class="hidden">
                 <div class="spinner"></div>
                 <p>철학자가 당신을 위한 지혜를 고르는 중입니다...</p>
@@ -157,7 +257,30 @@
         </section>
     </main>
 
-    <!-- 룰렛이 돌아가고 결과가 나오는 마법(논리)을 담당할 자바스크립트 파일 연결입니다 -->
-    <script src="app.js"></script>
+    <!-- 철학자 갤러리 팝업 모달 -->
+    <div id="philosopher-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="modal-close" class="modal-close-btn">&times;</button>
+            <h2 id="modal-name">철학자 이름</h2>
+            <blockquote id="modal-quote">"명언 내용"</blockquote>
+            <p id="modal-advice">해석 내용</p>
+            <a href="#" target="_blank" class="youtube-btn" id="modal-youtube-link" style="margin-top: 20px; font-size: 0.9rem; padding: 10px 15px;">
+                📺 행복칠TV에서 이 철학자 영상 찾기
+            </a>
+        </div>
+    </div>
+
+    <!-- 유튜브 영상 내장(임베드) 모달 -->
+    <div id="video-modal" class="modal-overlay hidden">
+        <div class="video-modal-content">
+            <button id="video-close" class="close-btn">&times;</button>
+            <div class="iframe-container">
+                <iframe id="youtube-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 스크립트 파일 연결 (캐시 방지용 v=2 추가) -->
+    <script src="app.js?v=2"></script>
 </body>
 </html>

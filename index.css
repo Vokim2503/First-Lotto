@@ -53,82 +53,159 @@ body {
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1); /* 얇고 투명한 테두리 */
     border-radius: 20px; /* 모서리를 둥글게 */
-    padding: 40px 30px;
+    padding: 25px 20px; /* 상하좌우 여백을 줄여 세로 길이를 압축합니다 */
     text-align: center;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); /* 입체감을 주는 그림자 */
 }
 
 /* 제목 부분 디자인 */
 header {
-    margin-bottom: 30px;
+    margin-bottom: 10px; /* 여백 더 축소 */
 }
 
-.logo-icon {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    filter: drop-shadow(0 0 10px rgba(46, 139, 87, 0.5)); /* 잎사귀 뒤에 녹색 빛 추가 */
-    animation: float 3s ease-in-out infinite; /* 위아래로 둥둥 떠다니는 애니메이션 */
+/* 3D 로고 및 캐러셀을 감싸는 전체 컨테이너 */
+.circular-logo-container {
+    position: relative;
+    width: 100%; 
+    height: 180px; /* 전체 높이 대폭 축소 (기존 250px -> 180px) */
+    margin: 0 auto 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
+/* 중앙 로고 이미지 설정 */
+.logo-center {
+    position: absolute;
+    width: 50px; 
+    height: 50px;
+    border-radius: 10px;
+    z-index: 10;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); 
+    background: rgba(0, 0, 0, 0.4); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-25px); /* 로고를 위로 약 2센티 정도 올림 */
 }
 
-.title {
-    font-size: 2.2rem;
-    font-weight: 800;
-    line-height: 1.3;
-    margin-bottom: 15px;
-    color: #ffffff;
-    /* 3D 텍스트 효과 (그라데이션 대신 겹겹이 그림자를 쌓음) */
+.logo-center img {
+    width: 90%; 
+    height: 90%;
+    object-fit: contain; 
+}
+
+/* 3D 씬 (퍼스펙티브 제공) */
+.scene {
+    width: 100%;
+    height: 180px;
+    perspective: 1000px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    pointer-events: none; 
+}
+
+/* 회전하는 캐러셀 트랙 */
+.carousel {
+    width: 0px; /* 가운데 정렬을 위해 0으로 설정 */
+    height: 90px; 
+    position: relative;
+    transform-style: preserve-3d;
+    animation: spin-carousel 120s infinite linear; 
+}
+
+@keyframes spin-carousel {
+    /* 반지름 축소(220px)에 맞춰 틸트 각도 조절 */
+    0% { transform: translateZ(-220px) rotateX(-5deg) rotateY(0deg); }
+    100% { transform: translateZ(-220px) rotateX(-5deg) rotateY(-360deg); } 
+}
+
+/* 낱글자가 들어가는 각각의 이미지 카드 (포스터) */
+.carousel__cell {
+    position: absolute;
+    height: 90px; /* 높이 축소 */
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: visible; 
+    
+    background: linear-gradient(180deg, rgba(20,20,20,0.6) 0%, rgba(50,50,50,0.7) 50%, rgba(20,20,20,0.6) 100%);
+    border-left: 1px solid rgba(0,0,0,0.8);
+    border-right: 1px solid rgba(255,255,255,0.15); 
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.9);
+}
+
+.cell-normal {
+    width: 54px;
+    left: -27px; /* 중앙 정렬 */
+}
+
+.cell-english {
+    width: 36px;
+    left: -18px;
+}
+
+.cell-particle {
+    width: 18px; /* 조사가 들어간 셀의 넓이를 대폭 축소! */
+    left: -9px; /* 중앙 정렬 */
+}
+
+/* 텍스트 스타일 최적화 */
+.carousel__cell span {
+    font-family: 'Cafe24Dangdanghae', sans-serif;
+    font-size: 38px; /* 더 많은 글자를 담기 위해 크기 최적화 */
+    color: #ff2a85;
     text-shadow: 
-        0 1px 0 #134f31,
-        0 2px 0 #114228,
-        0 3px 0 #0f351f,
-        0 4px 0 #0d2816,
-        0 5px 0 #0b1b0d,
-        0 6px 1px rgba(0,0,0,0.1),
-        0 0 5px rgba(0,0,0,0.1),
-        0 1px 3px rgba(0,0,0,0.3),
-        0 3px 5px rgba(0,0,0,0.2),
-        0 5px 10px rgba(0,0,0,0.25),
-        0 10px 10px rgba(0,0,0,0.2),
-        0 20px 20px rgba(0,0,0,0.15);
-    /* 좌우로 부드럽게 움직이는 애니메이션 추가 */
-    -webkit-animation: glide-title 4s ease-in-out infinite, float3DTitle 4s ease-in-out infinite alternate;
-    animation: glide-title 4s ease-in-out infinite, float3DTitle 4s ease-in-out infinite alternate;
+        1px 1px 0px #111,
+        2px 2px 0px #111,
+        3px 3px 4px rgba(0,0,0,0.9);
+    -webkit-text-stroke: 1.2px #a4f522; 
+    transform: scaleY(1.3); 
+    display: inline-block;
 }
 
-@-webkit-keyframes float3DTitle {
-    0% { -webkit-transform: translateX(-10px) rotate(-2deg); transform: translateX(-10px) rotate(-2deg); }
-    100% { -webkit-transform: translateX(10px) rotate(2deg); transform: translateX(10px) rotate(2deg); }
+/* 3D 자막 전용 고급 색상 클래스 추가 */
+.text-green {
+    color: #10b981 !important; /* 에메랄드 녹색 */
+    -webkit-text-stroke: 1.2px #a4f522 !important;
+    text-shadow: 1px 1px 0px #111, 2px 2px 0px #111, 3px 3px 10px rgba(16,185,129,0.8) !important;
 }
 
-@keyframes float3DTitle {
-    0% { transform: translateX(-10px) rotate(-2deg); }
-    100% { transform: translateX(10px) rotate(2deg); }
+.text-gold {
+    color: #FFD700 !important; /* 황금색 (세월의 깊이와 가치) */
+    -webkit-text-stroke: 1.2px #ff8c00 !important;
+    text-shadow: 1px 1px 0px #111, 2px 2px 0px #111, 3px 3px 10px rgba(255,215,0,0.8) !important;
 }
 
-.intro-text {
-    font-size: 1.05rem;
-    color: #cbd5e1;
-    font-weight: 300;
-    line-height: 1.7;
+.text-silver {
+    color: #f8fafc !important; /* 깨끗한 은백색 (다른 색상을 돋보이게 함) */
+    -webkit-text-stroke: 1.2px #64748b !important;
+    text-shadow: 1px 1px 0px #111, 2px 2px 0px #111, 3px 3px 8px rgba(0,0,0,0.9) !important;
 }
+
+/* 조사(의, 을, 는)를 특별히 작게 처리 */
+.carousel__cell span.particle {
+    font-size: 20px; /* 조사 글자크기 축소 */
+    color: #ff85c0; 
+    -webkit-text-stroke: 0.8px #a4f522;
+}
+
+
 
 /* 영역을 부드럽게 나눠주는 구분선 */
 .divider {
     border: 0;
     height: 1px;
     background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.2), rgba(255,255,255,0));
-    margin: 30px 0;
+    margin: 15px 0; /* 마진 더 축소 */
 }
 
 /* 고민 선택 영역 디자인 */
 .selection-area {
-    margin-bottom: 30px;
+    margin-bottom: 15px; /* 마진 더 축소 */
 }
 
 .selection-area label {
@@ -153,9 +230,40 @@ select {
     transition: all 0.3s ease; /* 부드러운 전환 효과 */
 }
 
-select:focus {
-    border-color: #8a2be2; /* 클릭 시 보라색 테두리로 빛납니다 */
-    box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+.selection-area select:focus {
+    border-color: #a4f522; /* 포커스 시 테두리 색상 (네온 그린) */
+    box-shadow: 0 0 8px rgba(164, 245, 34, 0.4);
+}
+
+/* 직접 입력용 텍스트 박스 */
+#custom-worry-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 1rem;
+    font-family: 'Cafe24Dangdanghae', sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#custom-worry-input:focus {
+    border-color: #a4f522;
+    box-shadow: 0 0 8px rgba(164, 245, 34, 0.4);
+}
+
+.text-silver {
+    color: #e2e8f0;
+    text-shadow: 0 0 5px rgba(226, 232, 240, 0.4);
+}
+
+.text-cyan {
+    color: #00e5ff;
+    text-shadow: 0 0 15px rgba(0, 229, 255, 0.8),
+                 0 0 30px rgba(0, 229, 255, 0.4);
 }
 
 select option {
@@ -219,8 +327,8 @@ select option {
 
 /* 명언 결과 카드 디자인 */
 #result-area {
-    margin-top: 30px;
-    animation: fadeIn 1s ease-out; /* 결과가 나타날 때 서서히 나타나는 효과 */
+    margin-top: 15px; /* 공간 절약을 위해 상단 여백 축소 */
+    animation: fadeIn 1s ease-out;
 }
 
 @keyframes fadeIn {
@@ -230,32 +338,34 @@ select option {
 
 .quote-card {
     background: rgba(0, 0, 0, 0.4);
-    padding: 30px 20px;
+    padding: 10px 20px; /* 세로 여백을 극단적으로 줄입니다 */
     border-radius: 15px;
-    border-left: 5px solid #2e8b57; /* 왼쪽에 녹색 강조선 추가 */
-    margin-bottom: 25px;
+    border-left: 5px solid #2e8b57;
+    margin-bottom: 10px; /* 세로 여백 줄임 */
+    width: 100%; /* 가로를 꽉 채워 글줄이 밑으로 넘어가지 않게 방지 (세로 길이 축소 효과) */
+    max-width: 100%;
 }
 
 #philosopher-name {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: #e8cbc0;
-    margin-bottom: 15px;
+    margin-bottom: 5px; /* 세로 여백 최소화 */
 }
 
 #quote-text {
-    font-size: 1.5rem;
-    line-height: 1.6;
+    font-size: 1.1rem;
+    line-height: 1.3;
     font-style: italic;
-    margin-bottom: 20px;
+    margin-bottom: 8px; /* 세로 여백 최소화 */
 }
 
 #quote-interpretation {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #b0b0b0;
     background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
+    padding: 8px; /* 내부 여백 최소화 */
     border-radius: 8px;
-    line-height: 1.5;
+    line-height: 1.3;
 }
 
 /* 유튜브 연계 버튼 (중요!) */
@@ -284,8 +394,8 @@ select option {
     display: block;
     overflow: hidden;
     width: 100%;
-    padding: 10px 0 20px 0;
-    margin-bottom: 20px;
+    padding: 5px 0 10px 0; /* 상하 패딩 축소 */
+    margin-bottom: 10px; /* 하단 마진 축소 */
     position: relative;
     /* 카드들의 양쪽 끝이 자연스럽게 사라지도록 그라데이션 마스크 효과 적용 */
     -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
@@ -294,7 +404,7 @@ select option {
 
 .gallery-track {
     display: flex;
-    gap: 15px;
+    gap: 15px; /* 사진 사이 간격 살짝 축소 */
     width: max-content;
     -webkit-animation: scroll-gallery 25s linear infinite;
     animation: scroll-gallery 25s linear infinite;
@@ -307,14 +417,14 @@ select option {
 
 .gallery-card {
     flex: 0 0 auto;
-    width: 105px;
+    width: 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-decoration: none;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
-    padding: 12px 8px;
+    padding: 8px 8px;
     transition: transform 0.3s ease, background 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -326,11 +436,11 @@ select option {
 }
 
 .gallery-card img {
-    width: 85px;
-    height: 105px;
+    width: 70px;
+    height: 90px;
     object-fit: cover;
     border-radius: 8px; /* 원이 아닌 약간 둥근 사각형 */
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.4);
     filter: sepia(0.2) contrast(1.1); /* 옛날 초상화 느낌 유지 */
 }
@@ -351,23 +461,144 @@ select option {
 }
 
 @-webkit-keyframes scroll-gallery {
-    0% { -webkit-transform: translateX(0); transform: translateX(0); }
-    100% { -webkit-transform: translateX(calc(-50% - 7.5px)); transform: translateX(calc(-50% - 7.5px)); }
+    /* 이미지는 왼쪽에서 오른쪽으로 흐름 */
+    0% { -webkit-transform: translateX(calc(-50% - 7.5px)); transform: translateX(calc(-50% - 7.5px)); }
+    100% { -webkit-transform: translateX(0); transform: translateX(0); }
 }
 
 @keyframes scroll-gallery {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-50% - 7.5px)); }
+    /* 이미지는 왼쪽에서 오른쪽으로 흐름 */
+    0% { transform: translateX(calc(-50% - 7.5px)); }
+    100% { transform: translateX(0); }
+}
+
+@-webkit-keyframes sweep-scroll {
+    0% { -webkit-transform: translateX(100vw) rotateX(25deg); transform: translateX(100vw) rotateX(25deg); }
+    100% { -webkit-transform: translateX(-100vw) rotateX(25deg); transform: translateX(-100vw) rotateX(25deg); } /* 간격 축소 */
+}
+
+@keyframes sweep-scroll {
+    0% { transform: translateX(100vw) rotateX(25deg); }
+    100% { transform: translateX(-100vw) rotateX(25deg); } /* 간격 축소 */
 }
 
 @-webkit-keyframes glide-title {
-    0% { -webkit-transform: translateX(-15px); transform: translateX(-15px); }
-    50% { -webkit-transform: translateX(15px); transform: translateX(15px); }
-    100% { -webkit-transform: translateX(-15px); transform: translateX(-15px); }
+    0% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
+    50% { -webkit-transform: translateX(10vw); transform: translateX(10vw); }
+    100% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
 }
 
 @keyframes glide-title {
-    0% { -webkit-transform: translateX(-15px); transform: translateX(-15px); }
-    50% { -webkit-transform: translateX(15px); transform: translateX(15px); }
-    100% { -webkit-transform: translateX(-15px); transform: translateX(-15px); }
+    0% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
+    50% { -webkit-transform: translateX(10vw); transform: translateX(10vw); }
+    100% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
+}
+
+@-webkit-keyframes wave-bob {
+    0%, 100% { -webkit-transform: translateY(0) rotateZ(0deg); transform: translateY(0) rotateZ(0deg); }
+    50% { -webkit-transform: translateY(-15px) rotateZ(-1deg); transform: translateY(-15px) rotateZ(-1deg); }
+}
+
+@keyframes wave-bob {
+    0%, 100% { transform: translateY(0) rotateZ(0deg); }
+    50% { transform: translateY(-15px) rotateZ(-1deg); }
+}
+
+/* =========================================================
+   철학자 갤러리 모달 (팝업) 스타일
+========================================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay.hidden {
+    display: none !important;
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #1e1e30, #2a2a40);
+    padding: 40px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    position: relative;
+    color: white;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: #ff2a85;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.modal-close-btn:hover {
+    transform: scale(1.2);
+}
+
+#modal-name {
+    font-family: 'Cafe24Dangdanghae', sans-serif;
+    color: #a4f522;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+#modal-quote {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-style: italic;
+    color: #f1f5f9;
+}
+
+#modal-advice {
+    font-size: 0.95rem;
+    color: #e8cbc0;
+    line-height: 1.5;
+}
+
+/* ====================================================
+   유튜브 비디오 내장(임베드) 모달 디자인
+==================================================== */
+.video-modal-content {
+    background: rgba(15, 23, 42, 0.95);
+    width: 95%;
+    max-width: 800px;
+    padding: 35px 15px 15px 15px;
+    border-radius: 15px;
+    position: relative;
+    border: 2px solid #a4f522;
+    box-shadow: 0 0 25px rgba(164, 245, 34, 0.5);
+}
+
+.iframe-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 비율 (유튜브 황금비율) */
+    height: 0;
+}
+
+.iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
 }
