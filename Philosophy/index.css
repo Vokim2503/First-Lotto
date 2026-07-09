@@ -135,15 +135,15 @@ header {
 /* 각각의 자막에 예쁜 무지개 색상 부여 (단어별 타이핑 효과) */
 .word {
     display: inline-block;
-    -webkit-animation: type-color 4s infinite;
-    animation: type-color 4s infinite;
+    -webkit-animation: type-color 25s infinite;
+    animation: type-color 25s infinite;
     margin-right: 15px; /* 단어 사이 띄어쓰기 여백 */
 }
 .w1 { -webkit-animation-delay: 0s; animation-delay: 0s; }
-.w2 { -webkit-animation-delay: 0.8s; animation-delay: 0.8s; }
-.w3 { -webkit-animation-delay: 1.6s; animation-delay: 1.6s; }
-.w4 { -webkit-animation-delay: 2.4s; animation-delay: 2.4s; }
-.w5 { -webkit-animation-delay: 3.2s; animation-delay: 3.2s; margin-right: 0; }
+.w2 { -webkit-animation-delay: 1.5s; animation-delay: 1.5s; }
+.w3 { -webkit-animation-delay: 3.0s; animation-delay: 3.0s; }
+.w4 { -webkit-animation-delay: 4.5s; animation-delay: 4.5s; }
+.w5 { -webkit-animation-delay: 6.0s; animation-delay: 6.0s; margin-right: 0; }
 
 @-webkit-keyframes type-color {
     0%, 100% { color: #ffffff; }
