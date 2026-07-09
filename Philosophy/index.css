@@ -106,7 +106,10 @@ header {
     color: #ffffff;
     white-space: nowrap;
     display: inline-block;
-    /* 더욱 강력해진 3D 텍스트 입체 효과 */
+    /* 둥글게 둥글게 파도처럼 떠다니는 애니메이션 */
+    -webkit-animation: wave-bob 4s ease-in-out infinite;
+    animation: wave-bob 4s ease-in-out infinite;
+    /* 더욱 강력해진 3D 텍스트 입체 효과 (그림자는 은색 유지) */
     text-shadow: 
         0 1px 0 #cccccc,
         0 2px 0 #c9c9c9,
@@ -121,6 +124,12 @@ header {
         0 10px 10px rgba(0,0,0,0.2),
         0 20px 20px rgba(0,0,0,0.15);
 }
+
+/* 각각의 자막에 예쁜 무지개 색상 부여 (무한 체인지 효과) */
+.title:nth-child(1) { color: #4CAF50; } /* 녹색 */
+.title:nth-child(2) { color: #FF69B4; } /* 분홍색 */
+.title:nth-child(3) { color: #FFD700; } /* 황금색 */
+.title:nth-child(4) { color: #00FFFF; } /* 하늘색(시안) */
 
 @-webkit-keyframes float3DTitle {
     0% { -webkit-transform: translateX(-10px) rotate(-2deg); transform: translateX(-10px) rotate(-2deg); }
@@ -406,12 +415,12 @@ select option {
     100% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
 }
 
-@-webkit-keyframes marquee-title-ltr {
-    0% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
-    100% { -webkit-transform: translateX(100vw); transform: translateX(100vw); }
+@-webkit-keyframes wave-bob {
+    0%, 100% { -webkit-transform: translateY(0) rotateZ(0deg); transform: translateY(0) rotateZ(0deg); }
+    50% { -webkit-transform: translateY(-15px) rotateZ(-1deg); transform: translateY(-15px) rotateZ(-1deg); }
 }
 
-@keyframes marquee-title-ltr {
-    0% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
-    100% { -webkit-transform: translateX(100vw); transform: translateX(100vw); }
+@keyframes wave-bob {
+    0%, 100% { transform: translateY(0) rotateZ(0deg); }
+    50% { transform: translateY(-15px) rotateZ(-1deg); }
 }
