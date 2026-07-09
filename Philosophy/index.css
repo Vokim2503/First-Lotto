@@ -64,17 +64,12 @@ header {
 }
 
 .logo-icon {
-    font-size: 2.5rem;
+    height: 80px; /* 로고 이미지 높이 지정 */
     margin-bottom: 10px;
-    filter: drop-shadow(0 0 10px rgba(46, 139, 87, 0.5)); /* 잎사귀 뒤에 녹색 빛 추가 */
-    animation: float 3s ease-in-out infinite; /* 위아래로 둥둥 떠다니는 애니메이션 */
+    display: flex;
+    justify-content: center;
 }
-
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
+/* 로고 애니메이션 제거 (사용자 요청) */
 
 .title-container {
     width: 100%;
@@ -107,13 +102,13 @@ header {
     position: absolute;
     top: 0;
     left: 0;
-    /* 24초 동안 한 문장이 이동 */
-    -webkit-animation: sweep-scroll 24s linear infinite;
-    animation: sweep-scroll 24s linear infinite;
+    /* 18초 동안 한 문장이 이동 (더 빠른 간격) */
+    -webkit-animation: sweep-scroll 18s linear infinite;
+    animation: sweep-scroll 18s linear infinite;
 }
 
 .t1 { -webkit-animation-delay: 0s; animation-delay: 0s; }
-.t2 { -webkit-animation-delay: 12s; animation-delay: 12s; } /* 정확히 절반 위치에서 등장 (꼬리물기) */
+.t2 { -webkit-animation-delay: 9s; animation-delay: 9s; } /* 정확히 절반 위치에서 등장 (꼬리물기 간격 최소화) */
 
 .title {
     font-family: 'Cafe24Dangdanghae', sans-serif;
@@ -145,20 +140,20 @@ header {
 }
 
 /* t1의 타이핑 효과 (0초 시작 기준) */
-.t1 .w1 { -webkit-animation: type-w1 24s infinite; animation: type-w1 24s infinite; }
-.t1 .w2 { -webkit-animation: type-w2 24s infinite; animation: type-w2 24s infinite; }
-.t1 .w3 { -webkit-animation: type-w3 24s infinite; animation: type-w3 24s infinite; }
-.t1 .w4 { -webkit-animation: type-w4 24s infinite; animation: type-w4 24s infinite; }
-.t1 .w5 { -webkit-animation: type-w5 24s infinite; animation: type-w5 24s infinite; margin-right: 0; }
+.t1 .w1 { -webkit-animation: type-w1 18s infinite; animation: type-w1 18s infinite; }
+.t1 .w2 { -webkit-animation: type-w2 18s infinite; animation: type-w2 18s infinite; }
+.t1 .w3 { -webkit-animation: type-w3 18s infinite; animation: type-w3 18s infinite; }
+.t1 .w4 { -webkit-animation: type-w4 18s infinite; animation: type-w4 18s infinite; }
+.t1 .w5 { -webkit-animation: type-w5 18s infinite; animation: type-w5 18s infinite; margin-right: 0; }
 
-/* t2의 타이핑 효과 (12초 지연 시작 기준) */
-.t2 .w1 { -webkit-animation: type-w1 24s infinite 12s; animation: type-w1 24s infinite 12s; }
-.t2 .w2 { -webkit-animation: type-w2 24s infinite 12s; animation: type-w2 24s infinite 12s; }
-.t2 .w3 { -webkit-animation: type-w3 24s infinite 12s; animation: type-w3 24s infinite 12s; }
-.t2 .w4 { -webkit-animation: type-w4 24s infinite 12s; animation: type-w4 24s infinite 12s; }
-.t2 .w5 { -webkit-animation: type-w5 24s infinite 12s; animation: type-w5 24s infinite 12s; margin-right: 0; }
+/* t2의 타이핑 효과 (9초 지연 시작 기준) */
+.t2 .w1 { -webkit-animation: type-w1 18s infinite 9s; animation: type-w1 18s infinite 9s; }
+.t2 .w2 { -webkit-animation: type-w2 18s infinite 9s; animation: type-w2 18s infinite 9s; }
+.t2 .w3 { -webkit-animation: type-w3 18s infinite 9s; animation: type-w3 18s infinite 9s; }
+.t2 .w4 { -webkit-animation: type-w4 18s infinite 9s; animation: type-w4 18s infinite 9s; }
+.t2 .w5 { -webkit-animation: type-w5 18s infinite 9s; animation: type-w5 18s infinite 9s; margin-right: 0; }
 
-/* 타이핑 시점: 24초 중 가운데를 지나는 15%~55% 구간에서 순차적으로 불켜짐 */
+/* 타이핑 시점: 18초 중 가운데를 지나는 15%~55% 구간에서 순차적으로 불켜짐 */
 @-webkit-keyframes type-w1 { 0%, 15% { color: #ffffff; } 15.1%, 100% { color: #4CAF50; } }
 @-webkit-keyframes type-w2 { 0%, 25% { color: #ffffff; } 25.1%, 100% { color: #FF69B4; } }
 @-webkit-keyframes type-w3 { 0%, 35% { color: #ffffff; } 35.1%, 100% { color: #FFD700; } }
@@ -440,12 +435,12 @@ select option {
 
 @-webkit-keyframes sweep-scroll {
     0% { -webkit-transform: translateX(100vw) rotateX(25deg); transform: translateX(100vw) rotateX(25deg); }
-    100% { -webkit-transform: translateX(-150vw) rotateX(25deg); transform: translateX(-150vw) rotateX(25deg); }
+    100% { -webkit-transform: translateX(-100vw) rotateX(25deg); transform: translateX(-100vw) rotateX(25deg); } /* 간격 축소 */
 }
 
 @keyframes sweep-scroll {
     0% { transform: translateX(100vw) rotateX(25deg); }
-    100% { transform: translateX(-150vw) rotateX(25deg); }
+    100% { transform: translateX(-100vw) rotateX(25deg); } /* 간격 축소 */
 }
 
 @-webkit-keyframes glide-title {
