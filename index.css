@@ -96,9 +96,9 @@ header {
         0 5px 10px rgba(0,0,0,0.25),
         0 10px 10px rgba(0,0,0,0.2),
         0 20px 20px rgba(0,0,0,0.15);
-    /* 좌우 이동 및 흔들림 애니메이션 */
-    -webkit-animation: float3DTitle 4s ease-in-out infinite alternate;
-    animation: float3DTitle 4s ease-in-out infinite alternate;
+    /* 좌우로 부드럽게 움직이는 애니메이션 추가 */
+    -webkit-animation: glide-title 4s ease-in-out infinite, float3DTitle 4s ease-in-out infinite alternate;
+    animation: glide-title 4s ease-in-out infinite, float3DTitle 4s ease-in-out infinite alternate;
 }
 
 @-webkit-keyframes float3DTitle {
@@ -358,4 +358,16 @@ select option {
 @keyframes scroll-gallery {
     0% { transform: translateX(0); }
     100% { transform: translateX(calc(-50% - 7.5px)); }
+}
+
+@-webkit-keyframes glide-title {
+    0% { -webkit-transform: translateX(-15px); transform: translateX(-15px); }
+    50% { -webkit-transform: translateX(15px); transform: translateX(15px); }
+    100% { -webkit-transform: translateX(-15px); transform: translateX(-15px); }
+}
+
+@keyframes glide-title {
+    0% { -webkit-transform: translateX(-15px); transform: translateX(-15px); }
+    50% { -webkit-transform: translateX(15px); transform: translateX(15px); }
+    100% { -webkit-transform: translateX(-15px); transform: translateX(-15px); }
 }
