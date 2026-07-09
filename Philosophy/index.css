@@ -136,35 +136,86 @@ header {
 .word {
     display: inline-block;
     margin-right: 15px;
+}
+.char {
+    display: inline-block;
     color: #ffffff;
 }
 
 /* t1의 타이핑 효과 (0초 시작 기준) */
-.t1 .w1 { -webkit-animation: type-w1 18s infinite; animation: type-w1 18s infinite; }
-.t1 .w2 { -webkit-animation: type-w2 18s infinite; animation: type-w2 18s infinite; }
-.t1 .w3 { -webkit-animation: type-w3 18s infinite; animation: type-w3 18s infinite; }
-.t1 .w4 { -webkit-animation: type-w4 18s infinite; animation: type-w4 18s infinite; }
-.t1 .w5 { -webkit-animation: type-w5 18s infinite; animation: type-w5 18s infinite; margin-right: 0; }
+.t1 .c1 { -webkit-animation: type-c1 18s infinite; animation: type-c1 18s infinite; }
+.t1 .c2 { -webkit-animation: type-c2 18s infinite; animation: type-c2 18s infinite; }
+.t1 .c3 { -webkit-animation: type-c3 18s infinite; animation: type-c3 18s infinite; }
+.t1 .c4 { -webkit-animation: type-c4 18s infinite; animation: type-c4 18s infinite; }
+.t1 .c5 { -webkit-animation: type-c5 18s infinite; animation: type-c5 18s infinite; }
+.t1 .c6 { -webkit-animation: type-c6 18s infinite; animation: type-c6 18s infinite; }
+.t1 .c7 { -webkit-animation: type-c7 18s infinite; animation: type-c7 18s infinite; }
+.t1 .c8 { -webkit-animation: type-c8 18s infinite; animation: type-c8 18s infinite; }
+.t1 .c9 { -webkit-animation: type-c9 18s infinite; animation: type-c9 18s infinite; }
+.t1 .c10 { -webkit-animation: type-c10 18s infinite; animation: type-c10 18s infinite; }
+.t1 .c11 { -webkit-animation: type-c11 18s infinite; animation: type-c11 18s infinite; }
+.t1 .c12 { -webkit-animation: type-c12 18s infinite; animation: type-c12 18s infinite; }
+.t1 .c13 { -webkit-animation: type-c13 18s infinite; animation: type-c13 18s infinite; }
+.t1 .c14 { -webkit-animation: type-c14 18s infinite; animation: type-c14 18s infinite; }
+.t1 .c15 { -webkit-animation: type-c15 18s infinite; animation: type-c15 18s infinite; }
+.t1 .c16 { -webkit-animation: type-c16 18s infinite; animation: type-c16 18s infinite; }
+.t1 .c17 { -webkit-animation: type-c17 18s infinite; animation: type-c17 18s infinite; }
 
 /* t2의 타이핑 효과 (9초 지연 시작 기준) */
-.t2 .w1 { -webkit-animation: type-w1 18s infinite 9s; animation: type-w1 18s infinite 9s; }
-.t2 .w2 { -webkit-animation: type-w2 18s infinite 9s; animation: type-w2 18s infinite 9s; }
-.t2 .w3 { -webkit-animation: type-w3 18s infinite 9s; animation: type-w3 18s infinite 9s; }
-.t2 .w4 { -webkit-animation: type-w4 18s infinite 9s; animation: type-w4 18s infinite 9s; }
-.t2 .w5 { -webkit-animation: type-w5 18s infinite 9s; animation: type-w5 18s infinite 9s; margin-right: 0; }
+.t2 .c1 { -webkit-animation: type-c1 18s infinite 9s; animation: type-c1 18s infinite 9s; }
+.t2 .c2 { -webkit-animation: type-c2 18s infinite 9s; animation: type-c2 18s infinite 9s; }
+.t2 .c3 { -webkit-animation: type-c3 18s infinite 9s; animation: type-c3 18s infinite 9s; }
+.t2 .c4 { -webkit-animation: type-c4 18s infinite 9s; animation: type-c4 18s infinite 9s; }
+.t2 .c5 { -webkit-animation: type-c5 18s infinite 9s; animation: type-c5 18s infinite 9s; }
+.t2 .c6 { -webkit-animation: type-c6 18s infinite 9s; animation: type-c6 18s infinite 9s; }
+.t2 .c7 { -webkit-animation: type-c7 18s infinite 9s; animation: type-c7 18s infinite 9s; }
+.t2 .c8 { -webkit-animation: type-c8 18s infinite 9s; animation: type-c8 18s infinite 9s; }
+.t2 .c9 { -webkit-animation: type-c9 18s infinite 9s; animation: type-c9 18s infinite 9s; }
+.t2 .c10 { -webkit-animation: type-c10 18s infinite 9s; animation: type-c10 18s infinite 9s; }
+.t2 .c11 { -webkit-animation: type-c11 18s infinite 9s; animation: type-c11 18s infinite 9s; }
+.t2 .c12 { -webkit-animation: type-c12 18s infinite 9s; animation: type-c12 18s infinite 9s; }
+.t2 .c13 { -webkit-animation: type-c13 18s infinite 9s; animation: type-c13 18s infinite 9s; }
+.t2 .c14 { -webkit-animation: type-c14 18s infinite 9s; animation: type-c14 18s infinite 9s; }
+.t2 .c15 { -webkit-animation: type-c15 18s infinite 9s; animation: type-c15 18s infinite 9s; }
+.t2 .c16 { -webkit-animation: type-c16 18s infinite 9s; animation: type-c16 18s infinite 9s; }
+.t2 .c17 { -webkit-animation: type-c17 18s infinite 9s; animation: type-c17 18s infinite 9s; }
 
-/* 타이핑 시점: 18초 중 가운데를 지나는 15%~55% 구간에서 순차적으로 불켜짐 */
-@-webkit-keyframes type-w1 { 0%, 15% { color: #ffffff; } 15.1%, 100% { color: #4CAF50; } }
-@-webkit-keyframes type-w2 { 0%, 25% { color: #ffffff; } 25.1%, 100% { color: #FF69B4; } }
-@-webkit-keyframes type-w3 { 0%, 35% { color: #ffffff; } 35.1%, 100% { color: #FFD700; } }
-@-webkit-keyframes type-w4 { 0%, 45% { color: #ffffff; } 45.1%, 100% { color: #00FFFF; } }
-@-webkit-keyframes type-w5 { 0%, 55% { color: #ffffff; } 55.1%, 100% { color: #FF9800; } }
+/* 문자별 타이핑 시점: 18초 중 가운데를 지나는 15%~55% 구간에서 순차적으로 불켜짐 */
+@-webkit-keyframes type-c1 { 0%, 15.0% { color: #ffffff; } 15.1%, 100% { color: #4CAF50; } }
+@-webkit-keyframes type-c2 { 0%, 17.3% { color: #ffffff; } 17.4%, 100% { color: #4CAF50; } }
+@-webkit-keyframes type-c3 { 0%, 19.7% { color: #ffffff; } 19.8%, 100% { color: #4CAF50; } }
+@-webkit-keyframes type-c4 { 0%, 22.0% { color: #ffffff; } 22.1%, 100% { color: #FF69B4; } }
+@-webkit-keyframes type-c5 { 0%, 24.4% { color: #ffffff; } 24.5%, 100% { color: #FF69B4; } }
+@-webkit-keyframes type-c6 { 0%, 26.7% { color: #ffffff; } 26.8%, 100% { color: #FF69B4; } }
+@-webkit-keyframes type-c7 { 0%, 29.1% { color: #ffffff; } 29.2%, 100% { color: #FFD700; } }
+@-webkit-keyframes type-c8 { 0%, 31.4% { color: #ffffff; } 31.5%, 100% { color: #FFD700; } }
+@-webkit-keyframes type-c9 { 0%, 33.8% { color: #ffffff; } 33.9%, 100% { color: #FFD700; } }
+@-webkit-keyframes type-c10 { 0%, 36.1% { color: #ffffff; } 36.2%, 100% { color: #00FFFF; } }
+@-webkit-keyframes type-c11 { 0%, 38.5% { color: #ffffff; } 38.6%, 100% { color: #00FFFF; } }
+@-webkit-keyframes type-c12 { 0%, 40.8% { color: #ffffff; } 40.9%, 100% { color: #00FFFF; } }
+@-webkit-keyframes type-c13 { 0%, 43.2% { color: #ffffff; } 43.3%, 100% { color: #00FFFF; } }
+@-webkit-keyframes type-c14 { 0%, 45.5% { color: #ffffff; } 45.6%, 100% { color: #00FFFF; } }
+@-webkit-keyframes type-c15 { 0%, 47.9% { color: #ffffff; } 48.0%, 100% { color: #FF9800; } }
+@-webkit-keyframes type-c16 { 0%, 50.2% { color: #ffffff; } 50.3%, 100% { color: #FF9800; } }
+@-webkit-keyframes type-c17 { 0%, 52.6% { color: #ffffff; } 52.7%, 100% { color: #FF9800; } }
 
-@keyframes type-w1 { 0%, 15% { color: #ffffff; } 15.1%, 100% { color: #4CAF50; } }
-@keyframes type-w2 { 0%, 25% { color: #ffffff; } 25.1%, 100% { color: #FF69B4; } }
-@keyframes type-w3 { 0%, 35% { color: #ffffff; } 35.1%, 100% { color: #FFD700; } }
-@keyframes type-w4 { 0%, 45% { color: #ffffff; } 45.1%, 100% { color: #00FFFF; } }
-@keyframes type-w5 { 0%, 55% { color: #ffffff; } 55.1%, 100% { color: #FF9800; } }
+@keyframes type-c1 { 0%, 15.0% { color: #ffffff; } 15.1%, 100% { color: #4CAF50; } }
+@keyframes type-c2 { 0%, 17.3% { color: #ffffff; } 17.4%, 100% { color: #4CAF50; } }
+@keyframes type-c3 { 0%, 19.7% { color: #ffffff; } 19.8%, 100% { color: #4CAF50; } }
+@keyframes type-c4 { 0%, 22.0% { color: #ffffff; } 22.1%, 100% { color: #FF69B4; } }
+@keyframes type-c5 { 0%, 24.4% { color: #ffffff; } 24.5%, 100% { color: #FF69B4; } }
+@keyframes type-c6 { 0%, 26.7% { color: #ffffff; } 26.8%, 100% { color: #FF69B4; } }
+@keyframes type-c7 { 0%, 29.1% { color: #ffffff; } 29.2%, 100% { color: #FFD700; } }
+@keyframes type-c8 { 0%, 31.4% { color: #ffffff; } 31.5%, 100% { color: #FFD700; } }
+@keyframes type-c9 { 0%, 33.8% { color: #ffffff; } 33.9%, 100% { color: #FFD700; } }
+@keyframes type-c10 { 0%, 36.1% { color: #ffffff; } 36.2%, 100% { color: #00FFFF; } }
+@keyframes type-c11 { 0%, 38.5% { color: #ffffff; } 38.6%, 100% { color: #00FFFF; } }
+@keyframes type-c12 { 0%, 40.8% { color: #ffffff; } 40.9%, 100% { color: #00FFFF; } }
+@keyframes type-c13 { 0%, 43.2% { color: #ffffff; } 43.3%, 100% { color: #00FFFF; } }
+@keyframes type-c14 { 0%, 45.5% { color: #ffffff; } 45.6%, 100% { color: #00FFFF; } }
+@keyframes type-c15 { 0%, 47.9% { color: #ffffff; } 48.0%, 100% { color: #FF9800; } }
+@keyframes type-c16 { 0%, 50.2% { color: #ffffff; } 50.3%, 100% { color: #FF9800; } }
+@keyframes type-c17 { 0%, 52.6% { color: #ffffff; } 52.7%, 100% { color: #FF9800; } }
 
 /* 자막 중 특정 조사 및 단어를 작게 표현 */
 .small-text {
