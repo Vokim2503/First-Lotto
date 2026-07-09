@@ -2,103 +2,145 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <!-- 모바일 기기에서도 예쁘게 보이도록 화면 크기를 맞춰주는 태그입니다 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>테마 로또 - 성향 맞춤 행운 생성기</title>
-    <meta name="description" content="자신의 성향에 맞는 기운(종교, 우주, 운세)을 선택하여 나만의 로또 번호를 추출하세요.">
-    <link rel="stylesheet" href="index.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
-</head>
-<body class="theme-default">
-    <div id="app">
-        <!-- 0단계: 테마(성향) 선택 화면 -->
-        <section id="stage-0" class="stage active">
-            <h1 class="title">행운의 근원</h1>
-            <p class="subtitle">어떤 기운으로 행운의 번호를 만드시겠습니까?</p>
-            
-            <div class="theme-grid">
-                <button class="theme-btn" data-theme="bible">
-                    <span class="icon">📖</span>
-                    <span class="theme-name">성경 구절</span>
-                    <span class="theme-desc">말씀의 힘으로</span>
-                </button>
-                <button class="theme-btn" data-theme="buddha">
-                    <span class="icon">🪷</span>
-                    <span class="theme-name">불경 구절</span>
-                    <span class="theme-desc">마음의 평화로</span>
-                </button>
-                <button class="theme-btn" data-theme="universe">
-                    <span class="icon">🌌</span>
-                    <span class="theme-name">우주의 기운</span>
-                    <span class="theme-desc">우주의 섭리로</span>
-                </button>
-                <button class="theme-btn" data-theme="tarot">
-                    <span class="icon">🔮</span>
-                    <span class="theme-name">신비한 타로</span>
-                    <span class="theme-desc">운명의 흐름으로</span>
-                </button>
-            </div>
-            
-            <!-- 애드센스 (메인화면 하단) -->
-            <div class="ad-placeholder mt-auto">
-                <p>Google AdSense</p>
-            </div>
-        </section>
-
-        <!-- 1단계: 난수(Seed) 생성 화면 (테마별로 내용 바뀜) -->
-        <section id="stage-1" class="stage">
-            <h1 class="title" id="stage1-title">에너지 모으기</h1>
-            <p class="subtitle" id="stage1-subtitle">안내에 따라 행운을 모아주세요.</p>
-            
-            <!-- 동적 상호작용 영역 -->
-            <div id="interaction-area" class="interaction-area">
-                <!-- JS에서 테마별 UI를 주입합니다 -->
-            </div>
-            
-            <div class="progress-wrapper">
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="seed-progress"></div>
-                </div>
-                <p id="energy-text" class="glow-text">0%</p>
-            </div>
-        </section>
-
-        <!-- 2, 3단계: 후보군 생성 및 번호 선택 화면 -->
-        <section id="stage-2" class="stage">
-            <h1 class="title">직관의 시간</h1>
-            <p class="subtitle">당신의 기운이 담긴 별 중 6개를 선택하세요.</p>
-            
-            <div id="orb-field"></div>
-            
-            <div class="selection-slots">
-                <div class="slot" data-index="0"></div>
-                <div class="slot" data-index="1"></div>
-                <div class="slot" data-index="2"></div>
-                <div class="slot" data-index="3"></div>
-                <div class="slot" data-index="4"></div>
-                <div class="slot" data-index="5"></div>
-            </div>
-        </section>
-
-        <!-- 4단계: 최종 결과 화면 -->
-        <section id="stage-3" class="stage">
-            <h1 class="title glow-text-intense">당신의 로또 번호</h1>
-            <p class="subtitle" id="result-message">행운이 함께하시길 바랍니다.</p>
-            
-            <div class="result-container" id="result-numbers">
-            </div>
-            
-            <div class="action-buttons">
-                <button id="btn-copy" class="btn primary">번호 복사하기</button>
-                <button id="btn-retry" class="btn secondary">처음으로</button>
-            </div>
-            
-            <!-- 애드센스 -->
-            <div class="ad-placeholder">
-                <p>Google AdSense</p>
-            </div>
-        </section>
-    </div>
     
+    <!-- 검색 엔진(구글, 네이버)에 우리 앱이 잘 노출되도록 하는 SEO(검색 엔진 최적화) 설정입니다 -->
+    <title>행복칠 철학자 상담소 | 나의 고민 해결 룰렛</title>
+    <meta name="description" content="명상과 철학의 채널 행복칠TV에서 제공하는 철학자 고민 상담소입니다. 쇼펜하우어와 톨스토이의 명언으로 오늘 하루의 해답을 찾아보세요.">
+    
+    <!-- Google Fonts에서 우아하고 현대적인 느낌의 폰트(Pretendard/Noto Serif)를 가져옵니다 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- 우리가 예쁘게 꾸밀 CSS 디자인 파일을 연결합니다 -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- 밤하늘이나 우주 같은 배경 효과를 줄 공간입니다 -->
+    <div class="background-effect"></div>
+
+    <!-- 화면 중앙에 들어갈 메인 상자(Glassmorphism 유리 효과)입니다 -->
+    <main class="container">
+        <header>
+            <div class="logo-icon">🌿</div>
+            <h1 class="title">행복의 조건을 말하는<br>철학자들의 한마디</h1>
+            <p class="intro-text">
+                마음이 어지럽고 갈 길이 막막하신가요?<br>
+                수백 년 전 지혜의 거장들이 당신을 위해 준비한<br>
+                단 하나의 해답을 뽑아보세요.
+            </p>
+        </header>
+
+        <!-- 철학자 갤러리 (메인 상자 내부 자동 스크롤) -->
+        <div class="philosopher-gallery">
+            <div class="gallery-track">
+                <!-- 1세트 -->
+                <a href="https://www.youtube.com/results?search_query=행복칠TV+쇼펜하우어" target="_blank" class="gallery-card">
+                    <img src="https://ui-avatars.com/api/?name=쇼펜하우어&background=2e8b57&color=fff&size=200&font-size=0.3" alt="쇼펜하우어">
+                    <span class="name-ko">쇼펜하우어</span>
+                    <span class="name-en">Schopenhauer</span>
+                </a>
+                <a href="https://www.youtube.com/results?search_query=행복칠TV+톨스토이" target="_blank" class="gallery-card">
+                    <img src="https://ui-avatars.com/api/?name=톨스토이&background=2e8b57&color=fff&size=200&font-size=0.3" alt="톨스토이">
+                    <span class="name-ko">톨스토이</span>
+                    <span class="name-en">Tolstoy</span>
+                </a>
+                <a href="https://www.youtube.com/results?search_query=행복칠TV+니체" target="_blank" class="gallery-card">
+                    <img src="images/nietzsche.jpg" alt="니체">
+                    <span class="name-ko">니체</span>
+                    <span class="name-en">Nietzsche</span>
+                </a>
+                <a href="https://www.youtube.com/results?search_query=행복칠TV+아우렐리우스" target="_blank" class="gallery-card">
+                    <img src="https://ui-avatars.com/api/?name=아우렐리우스&background=2e8b57&color=fff&size=200&font-size=0.3" alt="아우렐리우스">
+                    <span class="name-ko">아우렐리우스</span>
+                    <span class="name-en">Marcus Aurelius</span>
+                </a>
+                <a href="https://www.youtube.com/results?search_query=행복칠TV+플라톤" target="_blank" class="gallery-card">
+                    <img src="images/plato.jpg" alt="플라톤">
+                    <span class="name-ko">플라톤</span>
+                    <span class="name-en">Plato</span>
+                </a>
+                <a href="https://www.youtube.com/results?search_query=행복칠TV+루소" target="_blank" class="gallery-card">
+                    <img src="images/rousseau.jpg" alt="루소">
+                    <span class="name-ko">루소</span>
+                    <span class="name-en">Rousseau</span>
+                </a>
+
+                <!-- 2세트 (자연스러운 무한 스크롤 연결을 위해 복제) -->
+                <a href="https://www.youtube.com/results?search_query=행복칠TV+쇼펜하우어" target="_blank" class="gallery-card">
+                    <img src="https://ui-avatars.com/api/?name=쇼펜하우어&background=2e8b57&color=fff&size=200&font-size=0.3" alt="쇼펜하우어">
+                    <span class="name-ko">쇼펜하우어</span>
+                    <span class="name-en">Schopenhauer</span>
+                </a>
+                <a href="https://www.youtube.com/results?search_query=행복칠TV+톨스토이" target="_blank" class="gallery-card">
+                    <img src="https://ui-avatars.com/api/?name=톨스토이&background=2e8b57&color=fff&size=200&font-size=0.3" alt="톨스토이">
+                    <span class="name-ko">톨스토이</span>
+                    <span class="name-en">Tolstoy</span>
+                </a>
+                <a href="https://www.youtube.com/results?search_query=행복칠TV+니체" target="_blank" class="gallery-card">
+                    <img src="images/nietzsche.jpg" alt="니체">
+                    <span class="name-ko">니체</span>
+                    <span class="name-en">Nietzsche</span>
+                </a>
+                <a href="https://www.youtube.com/results?search_query=행복칠TV+아우렐리우스" target="_blank" class="gallery-card">
+                    <img src="https://ui-avatars.com/api/?name=아우렐리우스&background=2e8b57&color=fff&size=200&font-size=0.3" alt="아우렐리우스">
+                    <span class="name-ko">아우렐리우스</span>
+                    <span class="name-en">Marcus Aurelius</span>
+                </a>
+                <a href="https://www.youtube.com/results?search_query=행복칠TV+플라톤" target="_blank" class="gallery-card">
+                    <img src="images/plato.jpg" alt="플라톤">
+                    <span class="name-ko">플라톤</span>
+                    <span class="name-en">Plato</span>
+                </a>
+                <a href="https://www.youtube.com/results?search_query=행복칠TV+루소" target="_blank" class="gallery-card">
+                    <img src="images/rousseau.jpg" alt="루소">
+                    <span class="name-ko">루소</span>
+                    <span class="name-en">Rousseau</span>
+                </a>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 사용자가 고민을 선택하는 영역입니다 -->
+        <section class="selection-area">
+            <label for="worry-select">지금 마음을 짓누르는 가장 무거운 고민은 무엇인가요?</label>
+            <select id="worry-select">
+                <option value="none">-- 고민을 선택해주세요 --</option>
+                <option value="life">막막한 인생과 진로</option>
+                <option value="human">상처받은 인간관계</option>
+                <option value="mind">불안하고 복잡한 마음</option>
+                <option value="politics">답답한 사회와 정치 현안</option>
+            </select>
+        </section>
+
+        <!-- 룰렛 버튼과 빙글빙글 돌아가는 효과가 나타날 영역입니다 -->
+        <section class="roulette-area">
+            <button id="spin-btn" class="glow-on-hover" disabled>철학자의 조언 구하기</button>
+            <div id="loading-spinner" class="hidden">
+                <div class="spinner"></div>
+                <p>철학자가 당신을 위한 지혜를 고르는 중입니다...</p>
+            </div>
+        </section>
+
+        <!-- 명언 결과가 짠! 하고 나타나는 영역입니다 -->
+        <section id="result-area" class="hidden">
+            <div class="quote-card">
+                <h2 id="philosopher-name">쇼펜하우어</h2>
+                <blockquote id="quote-text">"인간의 행복은 거의 전적으로 그의 내면의 상태에 달려 있다."</blockquote>
+                <p id="quote-interpretation">행복칠TV 해석: 남의 시선에 얽매이지 말고 당신의 마음을 먼저 돌보라는 뜻입니다.</p>
+            </div>
+            
+            <!-- 유튜브 채널로 유도하는 가장 중요한 '수익화 버튼'입니다 -->
+            <a href="#" target="_blank" class="youtube-btn" id="youtube-link">
+                📺 이 철학자에 대한 행복칠TV 영상 바로보기
+            </a>
+        </section>
+    </main>
+
+    <!-- 룰렛이 돌아가고 결과가 나오는 마법(논리)을 담당할 자바스크립트 파일 연결입니다 -->
     <script src="app.js"></script>
 </body>
 </html>
