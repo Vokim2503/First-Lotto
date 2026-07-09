@@ -76,19 +76,43 @@ header {
     100% { transform: translateY(0px); }
 }
 
-.title {
-    font-size: 2.2rem;
-    font-weight: 800;
-    line-height: 1.3;
+.title-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 20px;
     margin-bottom: 15px;
+    perspective: 800px; /* 3D 원근감 부여 */
+    /* 양쪽 끝이 스르륵 사라지도록 마스크 효과 (선택사항) */
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.marquee-title-track {
+    display: flex;
+    gap: 150px; /* 텍스트 사이의 간격 */
+    width: max-content;
+    /* 자막은 우에서 좌로 흐르도록 변경 */
+    -webkit-animation: marquee-title-rtl 15s linear infinite;
+    animation: marquee-title-rtl 15s linear infinite;
+    transform-style: preserve-3d;
+}
+
+.title {
+    font-family: 'Cafe24Dangdanghae', sans-serif; /* 당당해 폰트 적용 */
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.3;
     color: #ffffff;
-    /* 3D 텍스트 효과 (그라데이션 대신 겹겹이 그림자를 쌓음) */
+    white-space: nowrap;
+    display: inline-block;
+    /* 더욱 강력해진 3D 텍스트 입체 효과 */
     text-shadow: 
-        0 1px 0 #134f31,
-        0 2px 0 #114228,
-        0 3px 0 #0f351f,
-        0 4px 0 #0d2816,
-        0 5px 0 #0b1b0d,
+        0 1px 0 #cccccc,
+        0 2px 0 #c9c9c9,
+        0 3px 0 #bbbbbb,
+        0 4px 0 #b9b9b9,
+        0 5px 0 #aaaaaa,
         0 6px 1px rgba(0,0,0,0.1),
         0 0 5px rgba(0,0,0,0.1),
         0 1px 3px rgba(0,0,0,0.3),
@@ -96,9 +120,6 @@ header {
         0 5px 10px rgba(0,0,0,0.25),
         0 10px 10px rgba(0,0,0,0.2),
         0 20px 20px rgba(0,0,0,0.15);
-    /* 좌우 이동 및 흔들림 애니메이션 */
-    -webkit-animation: float3DTitle 4s ease-in-out infinite alternate;
-    animation: float3DTitle 4s ease-in-out infinite alternate;
 }
 
 @-webkit-keyframes float3DTitle {
@@ -351,11 +372,46 @@ select option {
 }
 
 @-webkit-keyframes scroll-gallery {
-    0% { -webkit-transform: translateX(0); transform: translateX(0); }
-    100% { -webkit-transform: translateX(calc(-50% - 7.5px)); transform: translateX(calc(-50% - 7.5px)); }
+    /* 이미지는 왼쪽에서 오른쪽으로 흐름 */
+    0% { -webkit-transform: translateX(calc(-50% - 7.5px)); transform: translateX(calc(-50% - 7.5px)); }
+    100% { -webkit-transform: translateX(0); transform: translateX(0); }
 }
 
 @keyframes scroll-gallery {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-50% - 7.5px)); }
+    /* 이미지는 왼쪽에서 오른쪽으로 흐름 */
+    0% { transform: translateX(calc(-50% - 7.5px)); }
+    100% { transform: translateX(0); }
+}
+
+@-webkit-keyframes marquee-title-rtl {
+    /* 4개의 자막이 끊임없이 이어지도록 0%에서 -25%로 이동 (1개 분량 이동) */
+    0% { -webkit-transform: translateX(0) rotateX(15deg) rotateY(-5deg); transform: translateX(0) rotateX(15deg) rotateY(-5deg); }
+    100% { -webkit-transform: translateX(-25%) rotateX(15deg) rotateY(-5deg); transform: translateX(-25%) rotateX(15deg) rotateY(-5deg); }
+}
+
+@keyframes marquee-title-rtl {
+    0% { transform: translateX(0) rotateX(15deg) rotateY(-5deg); }
+    100% { transform: translateX(-25%) rotateX(15deg) rotateY(-5deg); }
+}
+
+@-webkit-keyframes glide-title {
+    0% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
+    50% { -webkit-transform: translateX(10vw); transform: translateX(10vw); }
+    100% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
+}
+
+@keyframes glide-title {
+    0% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
+    50% { -webkit-transform: translateX(10vw); transform: translateX(10vw); }
+    100% { -webkit-transform: translateX(-10vw); transform: translateX(-10vw); }
+}
+
+@-webkit-keyframes marquee-title-ltr {
+    0% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+    100% { -webkit-transform: translateX(100vw); transform: translateX(100vw); }
+}
+
+@keyframes marquee-title-ltr {
+    0% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+    100% { -webkit-transform: translateX(100vw); transform: translateX(100vw); }
 }
