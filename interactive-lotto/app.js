@@ -1,164 +1,118 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    let currentTheme = 'universe'; // 기본 테마
+    let currentTheme = 'nothing'; // 기본 테마
     let userSeedData = []; // 시드 생성을 위한 데이터
     let energy = 0;
     
-    // 성경/불경 더미 데이터
-    const bibleVerses = [
-        "여호와는 나의 목자시니 내게 부족함이 없으리로다 (시편 23:1)",
-        "내게 능력 주시는 자 안에서 내가 모든 것을 할 수 있느니라 (빌립보서 4:13)",
-        "두려워하지 말라 내가 너와 함께 함이라 (이사야 41:10)",
-        "구하라 그러면 너희에게 주실 것이요 (마태복음 7:7)"
-    ];
-    const buddhaVerses = [
-        "마음이 모든 것을 만든다. (법구경)",
-        "지나간 과거에 매달리지 말고 미래를 원하지도 말라. (아함경)",
-        "스스로를 등불로 삼고 의지하라. (열반경)",
-        "물방울이 모여 바다를 이룬다. (잡아함경)"
-    ];
+    // 실시간 뉴스 기사 가져오기 (대구매일신문 RSS)
+    let currentTrend = "압도적인 긍정 에너지"; // 기본값
+    let newsLink = "#";
+    const newsRSSUrl = "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.imaeil.com%2Frss";
+    
+    // API 응답 지연을 방지하기 위한 3초 타임아웃
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
 
-    // --- 0단계: 테마 선택 ---
-    const themeBtns = document.querySelectorAll('.theme-btn');
-    themeBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const theme = e.currentTarget.dataset.theme;
-            selectTheme(theme);
-        });
-    });
-
-    function selectTheme(theme) {
-        currentTheme = theme;
-        // 1. 테마 CSS 클래스 적용
-        document.body.className = `theme-${theme}`;
-        
-        // 2. 구글 애널리틱스 등 데이터 수집을 위한 가상 로깅 (여기서 사용자 성향 데이터를 수집합니다)
-        console.log(`[분석용 데이터] 사용자가 '${theme}' 테마를 선택했습니다.`);
-        // 실제 운영 시: gtag('event', 'select_theme', { 'theme_name': theme });
-
-        // 3. 1단계 화면 셋업
-        setupStage1();
-        
-        // 4. 스테이지 전환
-        goToStage(1);
-    }
-
-    // --- 1단계: 테마별 난수 생성 UI 셋업 ---
-    let interactionElement = null;
-    let chargeInterval = null;
-
-    function setupStage1() {
-        energy = 0;
-        userSeedData = [];
-        updateProgress();
-        
-        const interactionArea = document.getElementById('interaction-area');
-        interactionArea.innerHTML = ''; // 초기화
-        
-        const title = document.getElementById('stage1-title');
-        const subtitle = document.getElementById('stage1-subtitle');
-
-        if (currentTheme === 'bible') {
-            title.textContent = '말씀의 힘';
-            subtitle.textContent = '성경책을 터치하여 말씀을 읽고 에너지를 채우세요.';
-            
-            interactionElement = document.createElement('div');
-            interactionElement.className = 'bible-book';
-            
-            const verseText = document.createElement('div');
-            verseText.className = 'bible-verse';
-            interactionArea.appendChild(verseText);
-            interactionArea.appendChild(interactionElement);
-            
-            interactionElement.addEventListener('click', () => {
-                const randomVerse = bibleVerses[Math.floor(Math.random() * bibleVerses.length)];
-                verseText.textContent = randomVerse;
-                verseText.style.opacity = 1;
+    fetch(newsRSSUrl, { signal: controller.signal })
+        .then(res => res.json())
+        .then(data => {
+            clearTimeout(timeoutId);
+            if(data && data.items && data.items.length > 0) {
+                // 상위 5개 기사 중 하나를 무작위로 선택하여 노출
+                const randomIndex = Math.floor(Math.random() * Math.min(5, data.items.length));
+                const newsItem = data.items[randomIndex];
+                currentTrend = newsItem.title;
+                newsLink = newsItem.link;
                 
-                // 구절의 문자열 길이나 코드를 바탕으로 시드 누적
-                userSeedData.push(randomVerse.length * Math.random());
-                addEnergy(25); // 4번 누르면 100%
-            });
-            
-        } else if (currentTheme === 'buddha') {
-            title.textContent = '마음의 평화';
-            subtitle.textContent = '목탁을 두드려 번뇌를 씻고 기운을 채우세요.';
-            
-            interactionElement = document.createElement('div');
-            interactionElement.className = 'moktak';
-            interactionArea.appendChild(interactionElement);
-            
-            interactionElement.addEventListener('click', () => {
-                // 클릭할 때마다 시드 누적
-                userSeedData.push(Date.now());
-                addEnergy(10); // 10번 두드리면 100%
-            });
+                const keywordEl = document.getElementById('live-trend-keyword');
+                if(keywordEl) {
+                    keywordEl.innerHTML = `<a href="${newsLink}" target="_blank" style="color: #fff; text-decoration: underline; text-decoration-color: var(--primary-glow); text-underline-offset: 4px;">"${currentTrend}"</a>`;
+                }
+            }
+        })
+        .catch(err => {
+            console.log("뉴스 로딩 실패 또는 지연", err);
+            const keywordEl = document.getElementById('live-trend-keyword');
+            if(keywordEl) keywordEl.innerText = `[오늘의 긍정적인 파동]`;
+        });
 
-        } else if (currentTheme === 'tarot') {
-            title.textContent = '운명의 카드';
-            subtitle.textContent = '카드를 터치하여 운명의 에너지를 이끌어내세요.';
+    // --- 0단계: 메인 버튼 클릭 ---
+    const btnStartCalc = document.getElementById('btn-start-calc');
+    if(btnStartCalc) {
+        btnStartCalc.addEventListener('click', () => {
+            // 버튼 컨테이너 숨기고
+            document.getElementById('calc-action-container').style.display = 'none';
+            // 통합 터미널 열기
+            document.getElementById('integrated-terminal').style.display = 'block';
             
-            interactionElement = document.createElement('div');
-            interactionElement.className = 'tarot-card';
-            interactionArea.appendChild(interactionElement);
-            
-            interactionElement.addEventListener('click', () => {
-                userSeedData.push(Math.random() * 1000);
-                addEnergy(35); // 3번 클릭
-            });
-            
-        } else {
-            // universe (기존 구슬 방식)
-            title.textContent = '우주의 에너지';
-            subtitle.textContent = '구슬을 문지르거나 꾹 눌러 에너지를 채워주세요.';
-            
-            interactionElement = document.createElement('div');
-            interactionElement.className = 'orb-core';
-            interactionArea.appendChild(interactionElement);
-            
-            // 기존 마우스/터치 홀드 로직
-            const startCharge = (e) => {
-                interactionElement.classList.add('charging');
-                userSeedData.push(e.clientX || (e.touches && e.touches[0].clientX) || 0);
-                chargeInterval = setInterval(() => addEnergy(2), 30);
-            };
-            const stopCharge = () => {
-                interactionElement.classList.remove('charging');
-                clearInterval(chargeInterval);
-            };
-            
-            interactionElement.addEventListener('mousedown', startCharge);
-            document.addEventListener('mouseup', stopCharge);
-            interactionElement.addEventListener('touchstart', startCharge, {passive: false});
-            document.addEventListener('touchend', stopCharge);
-        }
+            runTerminalAnimation();
+        });
     }
 
-    function addEnergy(amount) {
-        if (energy >= 100) return;
-        energy += amount;
-        if (energy >= 100) {
-            energy = 100;
-            finishCharging();
-        }
-        updateProgress();
-    }
+    // --- 1단계: 터미널 연산 애니메이션 ---
+    function runTerminalAnimation() {
+        const titleEl = document.getElementById('term-news-title');
+        const lengthEl = document.getElementById('term-news-length');
+        const timeSyncEl = document.getElementById('term-time-sync');
+        const timeEl = document.getElementById('term-click-time');
+        const calcStartEl = document.getElementById('term-calc-start');
+        const finalSeedEl = document.getElementById('term-final-seed');
+        const actionBtn = document.getElementById('stage1-action');
+        const btnToCatch = document.getElementById('btn-to-catch');
 
-    function updateProgress() {
-        document.getElementById('seed-progress').style.width = `${energy}%`;
-        document.getElementById('energy-text').textContent = `${Math.floor(energy)}%`;
-    }
+        // Reset
+        [titleEl, lengthEl, timeSyncEl, timeEl, calcStartEl, finalSeedEl, actionBtn].forEach(el => {
+            if(el) el.style.display = 'none';
+        });
 
-    function finishCharging() {
-        if(chargeInterval) clearInterval(chargeInterval);
-        
-        // 1. 사용자 데이터를 기반으로 최종 난수 시드 생성
-        const seedSum = userSeedData.reduce((a, b) => a + b, 1);
-        
-        // 2. 다음 단계로
+        // 1. 이슈 데이터 표시
         setTimeout(() => {
-            goToStage(2, seedSum);
+            titleEl.innerText = `선택된 이슈: [${currentTrend}]`;
+            titleEl.style.display = 'block';
         }, 800);
+
+        setTimeout(() => {
+            lengthEl.innerText = `기사 문자 길이 값 추출: ${currentTrend.length} bytes`;
+            lengthEl.style.display = 'block';
+        }, 1600);
+
+        // 2. 시간 동기화
+        setTimeout(() => {
+            timeSyncEl.style.display = 'block';
+        }, 2400);
+
+        let clickTimeMs = Date.now();
+        setTimeout(() => {
+            const date = new Date(clickTimeMs);
+            const timeStr = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')} ` +
+                            `${date.getHours().toString().padStart(2,'0')}:${date.getMinutes().toString().padStart(2,'0')}:${date.getSeconds().toString().padStart(2,'0')}.${date.getMilliseconds()}`;
+            timeEl.innerText = `사용자 고유 클릭 시간: ${timeStr}`;
+            timeEl.style.display = 'block';
+        }, 3200);
+
+        // 3. 연산 시작
+        setTimeout(() => {
+            calcStartEl.style.display = 'block';
+        }, 4000);
+
+        // 4. 결과 출력
+        setTimeout(() => {
+            const finalSeed = clickTimeMs * currentTrend.length;
+            userSeedData = [finalSeed]; // 저장
+            
+            finalSeedEl.innerText = `=> 고유 난수(Seed): ${finalSeed} 생성 완료!`;
+            finalSeedEl.style.display = 'block';
+        }, 5500);
+
+        // 5. 버튼 표시
+        setTimeout(() => {
+            actionBtn.style.display = 'block';
+        }, 6000);
+
+        // 다음 단계로
+        btnToCatch.addEventListener('click', () => {
+            goToStage(2, userSeedData[0]);
+        }, {once: true});
     }
 
     // --- 스테이지 전환 관리 ---

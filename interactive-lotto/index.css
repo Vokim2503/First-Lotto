@@ -7,24 +7,30 @@
     --text-muted: #94a3b8;
 }
 
-/* 테마별 색상 변수 오버라이드 */
-body.theme-bible {
-    --bg-dark: #272314;
-    --bg-darker: #131008;
+/* 테마별 색상 변수 오버라이드 (새로운 해시태그 테마) */
+body.theme-money {
+    --bg-dark: #3f2e08;
+    --bg-darker: #1a1303;
     --primary-glow: #fbbf24;
-    --secondary-glow: #d97706;
+    --secondary-glow: #f59e0b;
 }
-body.theme-buddha {
-    --bg-dark: #1f2924;
-    --bg-darker: #0f1712;
-    --primary-glow: #4ade80;
+body.theme-quit {
+    --bg-dark: #450a0a;
+    --bg-darker: #170303;
+    --primary-glow: #ef4444;
+    --secondary-glow: #dc2626;
+}
+body.theme-healing {
+    --bg-dark: #064e3b;
+    --bg-darker: #022c22;
+    --primary-glow: #10b981;
     --secondary-glow: #059669;
 }
-body.theme-tarot {
-    --bg-dark: #1e1b4b;
-    --bg-darker: #0b092a;
-    --primary-glow: #c084fc;
-    --secondary-glow: #e879f9;
+body.theme-nothing {
+    --bg-dark: #1e293b;
+    --bg-darker: #0f172a;
+    --primary-glow: #94a3b8;
+    --secondary-glow: #cbd5e1;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -80,36 +86,79 @@ body {
     text-align: center; margin-bottom: 2rem; line-height: 1.5;
 }
 
+/* 트렌드 상단 컨테이너 */
+.trend-container {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(0,0,0,0.3);
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+    width: 100%;
+}
+.trend-label {
+    font-size: 1rem;
+    color: #ef4444; 
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.trend-keyword {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+.trend-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+.divider {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+    margin-bottom: 1.5rem;
+}
+.mbti-guide {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #e2e8f0;
+}
+
 /* 0단계: 테마 선택 버튼 그리드 */
 .theme-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     width: 100%;
     padding: 0 10px;
 }
 
-.theme-btn {
+.mbti-btn {
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 15px;
-    padding: 20px;
+    border-radius: 30px; /* 알약 형태 */
+    padding: 15px 25px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
     cursor: pointer;
     transition: all 0.3s;
     color: white;
 }
-.theme-btn:hover {
-    background: rgba(255,255,255,0.1);
-    transform: translateY(-5px);
+.mbti-btn:hover {
+    background: rgba(255,255,255,0.15);
+    transform: translateX(5px);
     border-color: var(--primary-glow);
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
-.theme-btn .icon { font-size: 2.5rem; margin-bottom: 10px; }
-.theme-btn .theme-name { font-size: 1.2rem; font-weight: 700; margin-bottom: 5px; }
-.theme-btn .theme-desc { font-size: 0.8rem; color: var(--text-muted); }
+.mbti-btn .icon { font-size: 1.8rem; margin-right: 15px; }
+.mbti-btn .theme-name { font-size: 1.2rem; font-weight: 700; }
+.mbti-btn .theme-desc { display: none; }
 
 /* 1단계: 동적 인터랙션 영역 */
 .interaction-area {
@@ -134,46 +183,58 @@ body {
 }
 .orb-core:active, .orb-core.charging { transform: scale(0.95); box-shadow: 0 0 50px var(--secondary-glow); }
 
-/* 성경책 */
-.bible-book {
-    width: 140px; height: 180px;
-    background: linear-gradient(45deg, #451a03, #78350f);
-    border-radius: 5px 15px 15px 5px;
-    border-left: 10px solid #fcd34d;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+/* 새 테마별 상호작용 UI 요소들 */
+.gold-coin {
+    width: 120px; height: 120px;
+    background: linear-gradient(45deg, #f59e0b, #fbbf24, #fcd34d);
+    border-radius: 50%;
     display: flex; justify-content: center; align-items: center;
-    cursor: pointer; transition: transform 0.2s;
-    position: relative;
-}
-.bible-book::after { content: '✝'; font-size: 4rem; color: rgba(252, 211, 77, 0.5); }
-.bible-book:active { transform: scale(0.95) rotateY(-10deg); }
-.bible-verse { position: absolute; top: -50px; width: 250px; text-align: center; color: #fcd34d; font-size: 0.9rem; opacity: 0; transition: opacity 0.5s; font-style: italic; }
-
-/* 목탁 */
-.moktak {
-    width: 120px; height: 100px;
-    background: radial-gradient(circle at top, #d97706, #78350f);
-    border-radius: 40% 40% 50% 50%;
-    position: relative;
+    font-size: 4rem;
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.5), inset 0 5px 15px rgba(255,255,255,0.8);
+    border: 5px solid #b45309;
     cursor: pointer; transition: transform 0.1s;
 }
-.moktak::before {
-    content: ''; position: absolute; top: 30px; left: 20px; right: 20px; height: 10px;
-    background: rgba(0,0,0,0.4); border-radius: 10px;
-}
-.moktak:active { transform: scale(0.95) translateY(5px); }
+.gold-coin:active { transform: scale(0.9) rotateY(20deg); box-shadow: 0 5px 15px rgba(245, 158, 11, 0.5); }
 
-/* 타로 카드 */
-.tarot-card {
-    width: 120px; height: 180px;
-    background: linear-gradient(135deg, #4c1d95, #1e1b4b);
-    border: 2px solid #c084fc; border-radius: 10px;
+.resign-letter {
+    width: 120px; height: 160px;
+    background: white; color: black;
+    border-radius: 5px;
     display: flex; justify-content: center; align-items: center;
-    cursor: pointer; transition: transform 0.3s;
-    box-shadow: 0 0 20px rgba(192, 132, 252, 0.4);
+    font-size: 1.5rem; font-weight: bold;
+    box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+    border-top: 20px solid #ef4444;
+    cursor: pointer; transition: transform 0.1s;
 }
-.tarot-card::after { content: '🔮'; font-size: 3rem; }
-.tarot-card:active { transform: scale(0.95) rotateY(180deg); }
+.resign-letter:active { transform: scale(0.9) rotate(5deg); }
+
+.healing-aura {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 4rem;
+    background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.2), transparent);
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+    cursor: pointer; transition: transform 0.1s;
+}
+.healing-aura.charging { transform: scale(1.2); box-shadow: 0 0 60px rgba(16, 185, 129, 0.8); }
+
+.tap-hint {
+    position: absolute;
+    top: 10px;
+    font-size: 1.1rem;
+    color: #fcd34d;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+    pointer-events: none;
+}
+.pulse-text {
+    animation: pulse 1s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.1); }
+}
 
 /* 프로그레스 바 */
 .progress-wrapper { width: 80%; display: flex; flex-direction: column; align-items: center; }
@@ -226,3 +287,25 @@ body {
 
 .ad-placeholder { width: 320px; height: 100px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; color: rgba(255,255,255,0.3); font-size: 0.9rem; }
 .mt-auto { margin-top: auto; margin-bottom: 2rem; }
+
+/* Terminal UI */
+.terminal-container {
+    background: #0a0a0c;
+    border: 1px solid var(--primary-glow);
+    border-radius: 8px;
+    padding: 1.5rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    text-align: left;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+    margin-top: 1.5rem;
+    min-height: 180px;
+}
+.term-line {
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeInTerm 0.3s forwards;
+}
+@keyframes fadeInTerm {
+    to { opacity: 1; }
+}
