@@ -83,9 +83,19 @@ header {
     padding-bottom: 20px;
     margin-bottom: 15px;
     perspective: 800px; /* 3D 원근감 부여 */
-    /* 양쪽 끝이 스르륵 사라지도록 마스크 효과 (선택사항) */
+    /* 양쪽 끝이 스르륵 사라지도록 마스크 효과 */
     -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
     mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+/* 원통형 곡면 착시를 위한 조명/그림자 효과 (양쪽 끝을 어둡게) */
+.title-container::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0) 80%, rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+    z-index: 10;
 }
 
 .marquee-title-track {
@@ -397,13 +407,13 @@ select option {
 
 @-webkit-keyframes marquee-title-rtl {
     /* 4개의 자막이 끊임없이 이어지도록 0%에서 -25%로 이동 (1개 분량 이동) */
-    0% { -webkit-transform: translateX(0) rotateX(15deg) rotateY(-5deg); transform: translateX(0) rotateX(15deg) rotateY(-5deg); }
-    100% { -webkit-transform: translateX(-25%) rotateX(15deg) rotateY(-5deg); transform: translateX(-25%) rotateX(15deg) rotateY(-5deg); }
+    0% { -webkit-transform: translateX(0) rotateX(25deg); transform: translateX(0) rotateX(25deg); }
+    100% { -webkit-transform: translateX(-25%) rotateX(25deg); transform: translateX(-25%) rotateX(25deg); }
 }
 
 @keyframes marquee-title-rtl {
-    0% { transform: translateX(0) rotateX(15deg) rotateY(-5deg); }
-    100% { transform: translateX(-25%) rotateX(15deg) rotateY(-5deg); }
+    0% { transform: translateX(0) rotateX(25deg); }
+    100% { transform: translateX(-25%) rotateX(25deg); }
 }
 
 @-webkit-keyframes glide-title {
