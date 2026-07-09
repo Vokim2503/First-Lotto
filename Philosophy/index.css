@@ -106,9 +106,6 @@ header {
     color: #ffffff;
     white-space: nowrap;
     display: inline-block;
-    /* 둥글게 둥글게 파도처럼 떠다니는 애니메이션 */
-    -webkit-animation: wave-bob 4s ease-in-out infinite;
-    animation: wave-bob 4s ease-in-out infinite;
     /* 더욱 강력해진 3D 텍스트 입체 효과 (그림자는 은색 유지) */
     text-shadow: 
         0 1px 0 #cccccc,
