@@ -132,11 +132,34 @@ header {
         0 20px 20px rgba(0,0,0,0.15);
 }
 
-/* 각각의 자막에 예쁜 무지개 색상 부여 (무한 체인지 효과) */
-.title:nth-child(1) { color: #4CAF50; } /* 녹색 */
-.title:nth-child(2) { color: #FF69B4; } /* 분홍색 */
-.title:nth-child(3) { color: #FFD700; } /* 황금색 */
-.title:nth-child(4) { color: #00FFFF; } /* 하늘색(시안) */
+/* 각각의 자막에 예쁜 무지개 색상 부여 (단어별 타이핑 효과) */
+.word {
+    display: inline-block;
+    -webkit-animation: type-color 4s infinite;
+    animation: type-color 4s infinite;
+    margin-right: 15px; /* 단어 사이 띄어쓰기 여백 */
+}
+.w1 { -webkit-animation-delay: 0s; animation-delay: 0s; }
+.w2 { -webkit-animation-delay: 0.8s; animation-delay: 0.8s; }
+.w3 { -webkit-animation-delay: 1.6s; animation-delay: 1.6s; }
+.w4 { -webkit-animation-delay: 2.4s; animation-delay: 2.4s; }
+.w5 { -webkit-animation-delay: 3.2s; animation-delay: 3.2s; margin-right: 0; }
+
+@-webkit-keyframes type-color {
+    0%, 100% { color: #ffffff; }
+    20% { color: #4CAF50; } /* 녹색 */
+    40% { color: #FF69B4; } /* 분홍색 */
+    60% { color: #FFD700; } /* 황금색 */
+    80% { color: #00FFFF; } /* 시안 */
+}
+
+@keyframes type-color {
+    0%, 100% { color: #ffffff; }
+    20% { color: #4CAF50; }
+    40% { color: #FF69B4; }
+    60% { color: #FFD700; }
+    80% { color: #00FFFF; }
+}
 
 /* 자막 중 특정 조사 및 단어를 작게 표현 */
 .small-text {
