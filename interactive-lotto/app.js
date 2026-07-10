@@ -18,9 +18,22 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             clearTimeout(timeoutId);
             if(data && data.items && data.items.length > 0) {
-                // 상위 5개 기사 중 하나를 무작위로 선택하여 노출
-                const randomIndex = Math.floor(Math.random() * Math.min(5, data.items.length));
-                const newsItem = data.items[randomIndex];
+                // 특정 키워드(정치인 등)가 포함된 기사를 제외하는 필터링 로직
+                const forbiddenKeywords = ['윤석열', '대통령', '김건희', '한동훈', '이재명', '정부', '여당', '야당'];
+                
+                const filteredItems = data.items.filter(item => {
+                    const title = item.title || "";
+                    // 제목에 금지어가 하나라도 포함되어 있으면 제외
+                    return !forbiddenKeywords.some(keyword => title.includes(keyword));
+                });
+
+                // 필터링된 기사가 없으면 원본 데이터라도 사용하되, 가급적 필터링된 목록에서 선택
+                const validItems = filteredItems.length > 0 ? filteredItems : data.items;
+
+                // 상위 5개(또는 필터링된 전체) 기사 중 하나를 무작위로 선택하여 노출
+                const maxIndex = Math.min(5, validItems.length);
+                const randomIndex = Math.floor(Math.random() * maxIndex);
+                const newsItem = validItems[randomIndex];
                 currentTrend = newsItem.title;
                 newsLink = newsItem.link;
                 
@@ -208,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 3단계: 결과 로직 ---
+    // --- 3단계: 결과 로직 ---
     function initStage3() {
         const resultContainer = document.getElementById('result-numbers');
         resultContainer.innerHTML = '';
@@ -236,6 +250,26 @@ document.addEventListener('DOMContentLoaded', () => {
             orb.style.animationDelay = `${index * 0.1}s`;
             resultContainer.appendChild(orb);
         });
+
+        // 🚀 자동화: 행복칠TV(UCeDsZt5n75Wh4UXuVl9wICg) 최신 영상 가져오기
+        const ytContainer = document.getElementById('youtube-promo-container');
+        const channelRSS = "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.youtube.com%2Ffeeds%2Fvideos.xml%3Fchannel_id%3DUCeDsZt5n75Wh4UXuVl9wICg";
+        
+        fetch(channelRSS)
+            .then(res => res.json())
+            .then(data => {
+                if(data && data.items && data.items.length > 0) {
+                    const latestVideo = data.items[0]; // 가장 최신 영상
+                    document.getElementById('yt-thumb').src = latestVideo.thumbnail;
+                    document.getElementById('yt-title').innerText = latestVideo.title;
+                    
+                    ytContainer.style.display = 'block';
+                    ytContainer.onclick = () => {
+                        window.open(latestVideo.link, '_blank');
+                    };
+                }
+            })
+            .catch(err => console.log("유튜브 로딩 실패", err));
     }
 
     document.getElementById('btn-retry').addEventListener('click', () => {
